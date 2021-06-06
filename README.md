@@ -1,4 +1,4 @@
-#About
+# About
 This app is developed for tracking rankings of leagues. You can simply enter Home & Away team's name, score and date which will then
 computes and displays result view sorting desc by date, modify or new entry of teams and finally list out all the teams with name, played, won, lost, drawn & total score.
 
