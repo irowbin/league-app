@@ -3,12 +3,12 @@
   "version": "1.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
-    "build": "npm run build-lib && ng build",
+    "start-dev": "ng serve",
+    "start": "node server.js",
+    "build": "npm run build-lib && ng build --prod",
     "build-lib": "ng build simple-table-lib",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test",
-    "lint": "ng lint --fix"
+    "test": "ng test"
   },
   "private": true,
   "dependencies": {
@@ -21,6 +21,8 @@
     "@angular/platform-browser-dynamic": "~12.0.3",
     "@angular/router": "~12.0.3",
     "bootswatch": "^5.0.1",
+    "express": "^4.17.1",
+    "path": "^0.12.7",
     "rxjs": "~6.6.0",
     "tslib": "^2.1.0",
     "zone.js": "~0.11.4"
