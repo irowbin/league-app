@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "scripts": {
     "ng": "ng",
-    "start-dev": "ng serve",
-    "start": "node server.js",
+    "start-dev": "npm run build-lib && ng serve",
+    "start": "ng build && node server.js",
     "build": "npm run build-lib && ng build",
     "build-lib": "ng build simple-table-lib",
     "watch": "ng build --watch --configuration development",
