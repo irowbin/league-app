@@ -46,12 +46,12 @@ export class ResultFormComponent extends  ResultSystemBase implements OnChanges 
       }
         break;
       case 'HTML5': {
+        const d = date.split('/')
         // make date value readable by html5 input.
-        formatted = new Date(date).toISOString().split('T')[0]
+        formatted = `${d[2]}-${d[0]}-${d[1]}`
       }
         break;
     }
-
     return formatted
   }
 
