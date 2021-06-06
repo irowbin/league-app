@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SimpleTableLibComponent } from './simple-table-lib.component';
+import {SimpleTableLibService} from "./simple-table-lib.service";
 
 describe('SimpleTableLibComponent', () => {
   let component: SimpleTableLibComponent;
@@ -8,7 +9,8 @@ describe('SimpleTableLibComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ SimpleTableLibComponent ]
+      declarations: [ SimpleTableLibComponent ],
+      providers: [SimpleTableLibService]
     })
     .compileComponents();
   });

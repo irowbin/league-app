@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ResultContainerComponent } from './result-container.component';
+import {ResultSystemService} from "@modules/common";
 
 describe('ResultListComponent', () => {
   let component: ResultContainerComponent;
@@ -8,7 +9,8 @@ describe('ResultListComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ResultContainerComponent ]
+      declarations: [ ResultContainerComponent ],
+      providers: [ResultSystemService]
     })
     .compileComponents();
   });
