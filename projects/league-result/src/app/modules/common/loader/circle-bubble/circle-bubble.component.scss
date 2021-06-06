@@ -1,0 +1,66 @@
+.circle-bubble {
+  display: inline-block;
+  font-size: 0;
+  padding: 0;
+
+  span {
+    vertical-align: middle;
+    border-radius: 100%;
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    margin: 3px 2px;
+    -webkit-animation: circle-bubble-anim 0.8s linear infinite alternate;
+    animation: circle-bubble-anim 0.8s linear infinite alternate;
+
+    &:nth-child(1) {
+      -webkit-animation-delay: -1s;
+      -moz-animation-delay: -1s;
+      animation-delay: -1s;
+      background: rgba(76, 115, 234, 0.6);
+    }
+
+    &:nth-child(2) {
+      -webkit-animation-delay: -0.8s;
+      -moz-animation-delay: -0.8s;
+      animation-delay: -0.8s;
+      background: rgba(76, 115, 234, 0.8);
+    }
+
+    &:nth-child(3) {
+      -webkit-animation-delay: -0.26666s;
+      -moz-animation-delay: -0.26666s;
+      animation-delay: -0.26666s;
+      background: rgba(76, 115, 234, 1);
+    }
+
+    &:nth-child(4) {
+      -webkit-animation-delay: -0.8s;
+      -moz-animation-delay: -0.8s;
+      animation-delay: -0.8s;
+      background: rgba(76, 115, 234, 0.8);
+    }
+
+    &:nth-child(5) {
+      -webkit-animation-delay: -1s;
+      -moz-animation-delay: -1s;
+      animation-delay: -1s;
+      background: rgba(76, 115, 234, 0.4);
+    }
+  }
+}
+
+@keyframes circle-bubble-anim {
+  from {
+    transform: scale(0, 0);
+    -webkit-transform: scale(0, 0);
+    -moz-transform: scale(0, 0);
+    -ms-transform: scale(0, 0);
+  }
+  to {
+    transform: scale(1, 1);
+    -webkit-transform: scale(1, 1);
+    -moz-transform: scale(1, 1);
+    -ms-transform: scale(1, 1);
+  }
+}

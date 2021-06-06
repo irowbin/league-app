@@ -1,0 +1,9 @@
+<ng-container *ngIf="(resultContainer | async) else loading"
+              [ngComponentOutlet]="(resultContainer | async)">
+
+</ng-container>
+<ng-template #loading>
+<div class="col d-flex justify-content-center mt-5">
+  <app-circle-bubble></app-circle-bubble>
+</div>
+</ng-template>

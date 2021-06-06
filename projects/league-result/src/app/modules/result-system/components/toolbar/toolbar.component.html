@@ -1,0 +1,36 @@
+<div class="row mb-2 mt-5">
+  <div class="col-8 mx-auto d-flex justify-content-center">
+    <div class="btn-group btn-group-sm">
+      <input type="radio"
+             class="btn-check"
+             name="result-options"
+             id="result-options1"
+             autocomplete="off"
+             [value]="options.RESULT"
+             [checked]="defaultOption === options.RESULT"
+             (change)="toolbarChanged.emit(options.RESULT)">
+      <label class="btn btn-outline-primary"
+             for="result-options1">Result</label>
+      <input type="radio"
+             class="btn-check"
+             name="result-options"
+             id="result-options2"
+             autocomplete="off"
+             [value]="options.NEW_OR_MODIFY"
+             [checked]="defaultOption === options.NEW_OR_MODIFY"
+             (change)="toolbarChanged.emit(options.NEW_OR_MODIFY)">
+      <label class="btn btn-outline-primary"
+             for="result-options2">New Result</label>
+      <input type="radio"
+             class="btn-check"
+             name="result-options"
+             id="result-options3"
+             autocomplete="off"
+             [value]="options.TABLE"
+             [checked]="defaultOption === options.TABLE"
+             (change)="toolbarChanged.emit(options.TABLE)">
+      <label class="btn btn-outline-primary"
+             for="result-options3">Table</label>
+    </div>
+  </div>
+</div>

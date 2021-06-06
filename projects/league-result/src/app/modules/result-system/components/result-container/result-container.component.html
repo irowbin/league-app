@@ -1,0 +1,22 @@
+<app-toolbar (toolbarChanged)="toolbarChanged($event)"
+             [defaultOption]="selectedToolbarOption">
+</app-toolbar>
+<div [ngSwitch]="selectedToolbarOption">
+  <app-league-table
+    *ngSwitchCase="options.TABLE"
+    [leagueData]="leagueData">
+  </app-league-table>
+  <app-result-preview
+    [leagueData]="leagueData"
+    *ngSwitchCase="options.RESULT"
+    (teamSelected)="onTeamSelected($event)"
+  >
+  </app-result-preview>
+
+  <app-result-form
+    *ngSwitchCase="options.NEW_OR_MODIFY"
+    [patchTeamValue]="selectedTeam"
+    (submitted)="formSubmitted($event)"
+  ></app-result-form>
+</div>
+

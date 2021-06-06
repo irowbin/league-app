@@ -1,0 +1,17 @@
+<div class="row">
+  <div class="col-8 mx-auto">
+    <div class="card border-light mt-3">
+      <div class="card-header">League Ranking Table</div>
+      <div class="card-body">
+        <demo-simple-table
+          [tableClass]="'table table-hover'"
+          [dataSource]="rows"
+          [columnConfig]="columnConfig"
+          [showRowNumber]="true"
+          [rowClass]="'table-primary'"
+        >
+        </demo-simple-table>
+      </div>
+    </div>
+  </div>
+</div>

@@ -5,7 +5,7 @@
     "baseUrl": "./",
     "outDir": "./dist/out-tsc",
     "forceConsistentCasingInFileNames": true,
-    "strict": true,
+    "strict": false,
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
     "sourceMap": true,
@@ -14,6 +14,15 @@
     "experimentalDecorators": true,
     "moduleResolution": "node",
     "importHelpers": true,
+    "preserveSymlinks": true,
+    "paths": {
+      "simple-table-lib": [
+        "dist/simple-table-lib/simple-table-lib",
+        "dist/simple-table-lib"
+      ],
+      "@app/*":["./projects/league-result/src/app/*"],
+      "@modules/*":["./projects/league-result/src/app/modules/*"]
+    },
     "target": "es2017",
     "module": "es2020",
     "lib": [

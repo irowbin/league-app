@@ -1,0 +1,68 @@
+<div class="row">
+  <div class="col-4 mx-auto">
+    <div class="card border-primary mb-3">
+      <div class="card-header">
+        {{ patchTeamValue ? 'Update Result' : 'Create New Result' }}
+      </div>
+      <div class="card-body">
+        <div class="alert alert-dismissible alert-danger"
+             *ngIf="invalidForm">
+          <button type="button"
+                  class="btn-close"
+                  data-bs-dismiss="alert"
+                  (click)="invalidForm = false"></button>
+          Invalid form submission. All fields are mandatory.
+        </div>
+        <form (ngSubmit)="saveChanges()"
+              [formGroup]="resultForm"
+              autocomplete="off">
+          <div class="form-row row">
+            <div class="form-group col-6">
+              <label for="home-team">Home Team Name</label>
+              <input type="text"
+                     class="form-control form-control-sm"
+                     id="home-team"
+                     formControlName="homeTeam">
+            </div>
+            <div class="form-group col-6">
+              <label for="away-team">Away Team Name</label>
+              <input type="text"
+                     class="form-control form-control-sm"
+                     id="away-team"
+                     formControlName="awayTeam">
+            </div>
+          </div>
+          <div class="form-row row">
+            <div class="form-group col-6">
+              <label for="home-team-score">Home Team Score</label>
+              <input type="number"
+                     class="form-control form-control-sm"
+                     id="home-team-score"
+                     formControlName="homeScore">
+            </div>
+            <div class="form-group col-6">
+              <label for="away-team-score">Away Team Score</label>
+              <input type="number"
+                     class="form-control form-control-sm"
+                     id="away-team-score"
+                     formControlName="awayTeamScore">
+            </div>
+          </div>
+          <div class="form-row row">
+            <div class="form-group col-6">
+              <label for="date">Date</label>
+              <input type="date"
+                     class="form-control form-control-sm"
+                     id="date"
+                     formControlName="date">
+            </div>
+          </div>
+          <button type="submit"
+                  class="btn btn-outline-primary btn-sm mt-3 px-4">
+            {{ patchTeamValue ? ' Update' : 'Add' }}
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

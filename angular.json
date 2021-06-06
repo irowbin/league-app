@@ -3,5 +3,142 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-  }
+    "league-result": {
+      "projectType": "application",
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        },
+        "@schematics/angular:application": {
+          "strict": true
+        }
+      },
+      "root": "projects/league-result",
+      "sourceRoot": "projects/league-result/src",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/league-result",
+            "index": "projects/league-result/src/index.html",
+            "main": "projects/league-result/src/main.ts",
+            "polyfills": "projects/league-result/src/polyfills.ts",
+            "tsConfig": "projects/league-result/tsconfig.app.json",
+            "inlineStyleLanguage": "scss",
+            "assets": [
+              "projects/league-result/src/favicon.ico",
+              "projects/league-result/src/assets"
+            ],
+            "styles": [
+              "bootswatch/dist/morph/bootstrap.min.css",
+              "projects/league-result/src/styles.scss"
+            ],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "500kb",
+                  "maximumError": "1mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "2kb",
+                  "maximumError": "4kb"
+                }
+              ],
+              "fileReplacements": [
+                {
+                  "replace": "projects/league-result/src/environments/environment.ts",
+                  "with": "projects/league-result/src/environments/environment.prod.ts"
+                }
+              ],
+              "outputHashing": "all",
+              "namedChunks": false
+            },
+            "development": {
+              "buildOptimizer": false,
+              "optimization": false,
+              "vendorChunk": true,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "namedChunks": true
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "configurations": {
+            "production": {
+              "browserTarget": "league-result:build:production"
+            },
+            "development": {
+              "browserTarget": "league-result:build:development"
+            }
+          },
+          "defaultConfiguration": "development"
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "league-result:build"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/league-result/src/test.ts",
+            "polyfills": "projects/league-result/src/polyfills.ts",
+            "tsConfig": "projects/league-result/tsconfig.spec.json",
+            "karmaConfig": "projects/league-result/karma.conf.js",
+            "inlineStyleLanguage": "scss",
+            "assets": [
+              "projects/league-result/src/favicon.ico",
+              "projects/league-result/src/assets"
+            ],
+            "styles": [
+              "projects/league-result/src/styles.scss"
+            ],
+            "scripts": []
+          }
+        }
+      }
+    },
+    "simple-table-lib": {
+      "projectType": "library",
+      "root": "projects/simple-table-lib",
+      "sourceRoot": "projects/simple-table-lib/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "project": "projects/simple-table-lib/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/simple-table-lib/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/simple-table-lib/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/simple-table-lib/src/test.ts",
+            "tsConfig": "projects/simple-table-lib/tsconfig.spec.json",
+            "karmaConfig": "projects/simple-table-lib/karma.conf.js"
+          }
+        }
+      }
+    }
+  },
+  "defaultProject": "league-result"
 }
