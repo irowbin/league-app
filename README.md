@@ -24,6 +24,9 @@ Run `ng generate component component-name` to generate a new component. You can 
 Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
 It  will first build the `simple-table-lib` and then the app.
 
+You can also run `npm run build-lib` which builds the library that has been used within the app. If you make changes on 
+library, you need to rebuild or configure script with `--watch` flag so whenever you make changes on library, it runs the incremental builds and reflects the changes in app.
+
 ## Running unit tests
 
 Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
