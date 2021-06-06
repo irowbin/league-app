@@ -5,19 +5,32 @@ import { TeamMatchesModel } from "@modules/common/models";
 
 @Injectable()
 export class ResultSystemService {
+  private static updateStorage(data?: Array<TeamMatchesModel>): void {
+    localStorage.setItem('league_items', JSON.stringify(data ? data : MOCK_DATA));
+  }
+  private static loadLeagueData(): Array<TeamMatchesModel> {
+    const storage = localStorage.getItem('league_items');
+    return storage ? JSON.parse(storage) : MOCK_DATA;
+  }
 
+  constructor() {
+    const storage = localStorage.getItem('league_items');
+    if(!storage)
+    ResultSystemService.updateStorage();
+  }
   /**
    * Fetches league data
    */
   fetchLeagueData(): Observable<Array<TeamMatchesModel>> {
-    return of(MOCK_DATA)
+    return of(ResultSystemService.loadLeagueData())
   }
 
   /**
    * Fetches a league by uuid
    */
   fetchLeague(uuid: string): Observable<TeamMatchesModel> {
-    return of(MOCK_DATA.find(t => t.uuid === uuid))
+    const data = ResultSystemService.loadLeagueData();
+    return of(data.find(t => t.uuid === uuid));
   }
 
   /**
@@ -25,13 +38,15 @@ export class ResultSystemService {
    * @param payload League payload whether to update or create new
    */
   addOrUpdateLeague(payload: TeamMatchesModel): Observable<boolean>{
-    const found = MOCK_DATA.find(i => i.uuid === payload.uuid);
+    const data = ResultSystemService.loadLeagueData();
+    const found = data.find(i => i.uuid === payload.uuid);
     if (found) {
       // probably need to optimize
-      MOCK_DATA[MOCK_DATA.indexOf(found)] = {...found, ...payload}
+      data[data.indexOf(found)] = {...found, ...payload}
     } else {
-      MOCK_DATA.push({...payload})
+      data.push({...payload});
     }
+    ResultSystemService.updateStorage(data);
     return of(true);
   }
 }
