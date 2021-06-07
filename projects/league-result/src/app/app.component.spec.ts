@@ -36,10 +36,8 @@ describe('AppComponent', () => {
   it('should contain router-outlet', () => {
     //arrange
     const {debugElement} = fixture;
-
     // act
     const navbar = debugElement.query(By.css('router-outlet'));
-
     // assert
     expect(navbar).toBeTruthy();
   });
