@@ -57,7 +57,12 @@
                 }
               ],
               "outputHashing": "all",
-              "namedChunks": false
+              "namedChunks": false,
+              "commonChunk": true,
+              "vendorChunk": true,
+              "extractCss": true,
+              "deleteOutputPath": true,
+              "buildOptimizer": true
             },
             "development": {
               "buildOptimizer": false,
