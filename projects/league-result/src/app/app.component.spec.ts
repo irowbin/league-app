@@ -22,7 +22,7 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it('should render navbar', () => {
+  it('should contain navbar', () => {
     //arrange
     const {debugElement} = fixture;
 
