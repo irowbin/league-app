@@ -11,6 +11,22 @@ app.get('/*', function(req,res) {
 
   res.sendFile(path.join(__dirname+'/dist/league-result/index.html'));
 });
+const port = process.env.PORT || 8080
+const server = app.listen(port)
 
-// Start the app by listening on the default Heroku port
-app.listen(process.env.PORT || 8080);
+console.log(`app is listening on port: ${port}`)
+
+const io = require('socket.io')(server);
+
+
+// endpoints
+io.on('connection', (socket) => {
+  socket.on('SYNC_LEAGUE', (data) => {
+    console.log('league result synced: ', data)
+    socket.broadcast.emit('LEAGUE_SYNCED', data);
+  });
+
+  socket.on('disconnect', () => {
+    console.log('disconnected')
+  });
+});

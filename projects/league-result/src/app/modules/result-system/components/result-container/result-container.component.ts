@@ -1,8 +1,9 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, OnDestroy, OnInit} from '@angular/core';
 import {ResultSystemService} from '@app/modules/common';
 import {TeamMatchesModel, ToolbarTypes} from '@app/modules/common/models';
-import {takeUntil} from "rxjs/operators";
+import {debounceTime, takeUntil, tap} from "rxjs/operators";
 import {ResultSystemBase} from '../../result-system.base';
+import {LeagueDataHandlerService} from "@modules/result-system/handlers/league-data-handler.service";
 
 @Component({
   selector: 'app-result-container',
@@ -10,9 +11,7 @@ import {ResultSystemBase} from '../../result-system.base';
   styleUrls: ['./result-container.component.scss']
 })
 export class ResultContainerComponent extends ResultSystemBase implements OnInit, OnDestroy {
-
-  leagueData: Array<TeamMatchesModel> = []
-
+  datasource: Array<TeamMatchesModel>
   /**
    * Default toolbar options as `TABLE` view.
    */
@@ -25,14 +24,23 @@ export class ResultContainerComponent extends ResultSystemBase implements OnInit
 
   selectedTeam: TeamMatchesModel
 
-  constructor(private readonly resultService: ResultSystemService) {
-    super()
+  constructor(public resultService: ResultSystemService,
+              public dataHandlerService: LeagueDataHandlerService,
+              private cdr: ChangeDetectorRef) {
+    super(dataHandlerService);
   }
 
   private initData(): void {
     this.resultService.fetchLeagueData().pipe(
+      tap(() => this.datasource = null),
+      debounceTime(100),
       takeUntil(this.toDestroy$)
-    ).subscribe(d => this.leagueData = d)
+    ).subscribe(d => {
+      // once the data get updated or emitted from socket changes,
+      // need to call the change detector to reflect changes on peer UI
+      this.datasource = d
+      this.cdr.detectChanges();
+    })
   }
 
   ngOnInit(): void {
@@ -47,7 +55,7 @@ export class ResultContainerComponent extends ResultSystemBase implements OnInit
    * Tracks toolbar changes on the UI
    * @param option Currently selected toolbar option.
    */
-  toolbarChanged (option: ToolbarTypes): void {
+  toolbarChanged(option: ToolbarTypes): void {
     this.selectedToolbarOption = option
     // when
     this.selectedTeam = null

@@ -1,28 +1,72 @@
-import {Injectable} from "@angular/core";
-import {Observable, of} from "rxjs";
-import {MOCK_DATA} from "@app/fakeData/static-storage";
-import { TeamMatchesModel } from "@modules/common/models";
+import {Injectable} from '@angular/core';
+import {BehaviorSubject, combineLatest, merge, Observable, of, race, Subject} from 'rxjs';
+import {MOCK_DATA} from '@app/fakeData/static-storage';
+import {TeamMatchesModel} from '@modules/common/models';
+import {socket} from '../../socket/socket-io.extension';
+import {delay, switchMap, tap} from "rxjs/operators";
+import {UuidGenerator} from "@modules/common/utils/uuid-generator";
+
+const gen = new UuidGenerator()
 
 @Injectable()
 export class ResultSystemService {
-  private static updateStorage(data?: Array<TeamMatchesModel>): void {
-    localStorage.setItem('league_items', JSON.stringify(Object.assign([], MOCK_DATA, data)));
-  }
-  private static loadLeagueData(): Array<TeamMatchesModel> {
-    const storage = localStorage.getItem('league_items');
-    return storage ? Object.assign([], JSON.parse(storage), MOCK_DATA) : MOCK_DATA;
+
+  private readonly _notify = new BehaviorSubject<Array<TeamMatchesModel>>([]);
+
+  set syncStorageData(data: Array<TeamMatchesModel>) {
+    if (!data) return;
+    of(data).pipe(
+      tap(d => ResultSystemService.updateStorage(data)),
+      delay(200)
+    ).subscribe(() => this._notify.next(ResultSystemService.loadLeagueData()));
   }
 
   constructor() {
     const storage = localStorage.getItem('league_items');
-    if(!storage)
-    ResultSystemService.updateStorage();
+    if (!storage)
+      ResultSystemService.updateStorage(MOCK_DATA.map(m => ({...m, uuid: gen._uuid})));
   }
+
+  /**
+   * Dedupe and return the updated version of data.
+   * @param data
+   */
+  private static dedupeData = (data: Array<TeamMatchesModel>) => [...(data || [])].reduce((accum, el) => {
+    const index = accum.findIndex(u => u.uuid === el.uuid)
+    if (index > -1) {
+      accum[index] = {...accum[index], ...el};
+    } else {
+      accum.push(el);
+    }
+    return accum;
+  }, [] as Array<TeamMatchesModel>);
+
+  /**
+   * Update most recent data into the local storage
+   * @param data incoming data to update.
+   * @see dedupeData
+   */
+  private static updateStorage(data?: Array<TeamMatchesModel>): void {
+    localStorage.setItem('league_items', JSON.stringify(data));
+  }
+
+  /**
+   * Check on local storage saved data and merge with static or static only which then return by deduping it.
+   */
+  private static loadLeagueData(): Array<TeamMatchesModel> {
+    const storage = localStorage.getItem('league_items');
+    return ResultSystemService.dedupeData(JSON.parse(storage) || []);
+  }
+
   /**
    * Fetches league data
    */
   fetchLeagueData(): Observable<Array<TeamMatchesModel>> {
-    return of(ResultSystemService.loadLeagueData())
+    const obs = of(null).pipe(
+      switchMap(() => this._notify)
+    );
+    this._notify.next(ResultSystemService.loadLeagueData());
+    return obs;
   }
 
   /**
@@ -37,7 +81,7 @@ export class ResultSystemService {
    * Adds or updates the league data
    * @param payload League payload whether to update or create new
    */
-  addOrUpdateLeague(payload: TeamMatchesModel): Observable<boolean>{
+  addOrUpdateLeague(payload: TeamMatchesModel): Observable<boolean> {
     const data = ResultSystemService.loadLeagueData();
     const found = data.find(i => i.uuid === payload.uuid);
     if (found) {
@@ -47,6 +91,7 @@ export class ResultSystemService {
       data.push({...payload});
     }
     ResultSystemService.updateStorage(data);
+    socket.emit('SYNC_LEAGUE', ResultSystemService.loadLeagueData())
     return of(true);
   }
 }

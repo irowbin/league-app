@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "scripts": {
     "ng": "ng",
-    "start-dev": "npm run build-lib && ng serve",
+    "start-dev": "npm run build-lib && NODE_ENV=development node socket-io.server.js & ng serve",
     "start": "node server.js",
     "build": "npm run build-lib && ng build",
     "build-lib": "ng build simple-table-lib",
@@ -20,6 +20,8 @@
     "@angular/platform-browser": "~12.0.3",
     "@angular/platform-browser-dynamic": "~12.0.3",
     "@angular/router": "~12.0.3",
+    "socket.io": "~3.1.1",
+    "socket.io-client": "~3.1.1",
     "bootswatch": "^5.0.1",
     "express": "^4.17.1",
     "path": "^0.12.7",

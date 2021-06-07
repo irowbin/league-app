@@ -1,6 +1,8 @@
 import {ChartValueType, LeagueChartModel, TeamMatchesModel} from "@app/modules/common/models";
+import {Injectable} from "@angular/core";
 
-export abstract class LeagueDataHandler {
+@Injectable()
+export class LeagueDataHandlerService {
   computeRankingResult(matchPayload: Array<TeamMatchesModel>): Array< Partial<LeagueChartModel>> {
     // initial result value
     const initialValue = {

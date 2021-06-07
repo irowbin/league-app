@@ -1,17 +1,18 @@
 import {Component, EventEmitter, Input, OnChanges, OnInit, Output} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import { ResultSystemService } from '@app/modules/common';
-import { TeamMatchesModel } from '@app/modules/common/models';
+import {ResultSystemService} from '@app/modules/common';
+import {TeamMatchesModel} from '@app/modules/common/models';
 import {ResultSystemBase} from "@modules/result-system/result-system.base";
 import {takeUntil} from "rxjs/operators";
 import {UuidGenerator} from "@modules/common/utils/uuid-generator";
+import {LeagueDataHandlerService} from "@modules/result-system/handlers/league-data-handler.service";
 
 @Component({
   selector: 'app-result-form',
   templateUrl: './result-form.component.html',
   styleUrls: ['./result-form.component.scss']
 })
-export class ResultFormComponent extends  ResultSystemBase implements OnChanges {
+export class ResultFormComponent extends ResultSystemBase implements OnChanges {
   resultForm: FormGroup
   /**
    * Retrieves form value from the parent and patches it.
@@ -30,9 +31,10 @@ export class ResultFormComponent extends  ResultSystemBase implements OnChanges 
    */
   invalidForm: boolean
 
-  constructor(private readonly fb: FormBuilder,
-              private readonly resultService: ResultSystemService) {
-    super();
+  constructor(private fb: FormBuilder,
+              private resultService: ResultSystemService,
+              public handlerService: LeagueDataHandlerService) {
+    super(handlerService);
     this.initForm();
   }
 

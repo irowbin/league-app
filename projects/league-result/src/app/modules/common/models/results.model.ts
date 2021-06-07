@@ -5,7 +5,7 @@ export interface TeamMatchesModel {
   /**
    * Item's unique identifier.
    */
-  uuid: string;
+  uuid?: string;
   /**
    * Game played date
    */

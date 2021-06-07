@@ -9,6 +9,7 @@ import {ResultFormComponent} from './components/result-form/result-form.componen
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {LeagueTableModule} from "./components/league-table/league-table.module";
 import { LoaderModule } from "../common";
+import {LeagueDataHandlerService} from "@modules/result-system/handlers/league-data-handler.service";
 
 @NgModule({
   imports: [
@@ -27,7 +28,8 @@ import { LoaderModule } from "../common";
     ToolbarComponent,
     ResultPreviewComponent,
     ResultFormComponent
-  ]
+  ],
+  providers: [LeagueDataHandlerService]
 })
 export class ResultSystemModule {
 }
