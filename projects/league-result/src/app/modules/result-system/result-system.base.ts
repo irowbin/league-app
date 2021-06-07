@@ -14,7 +14,7 @@ export class ResultSystemBase implements OnDestroy {
    * @see UuidGenerator
    */
   get _uuid(): string {
-    return new UuidGenerator().Uuid()
+    return new UuidGenerator().uuid()
   }
 
   ngOnDestroy(): void {
