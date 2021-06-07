@@ -26,5 +26,13 @@ export const MOCK_DATA: Array<TeamMatchesModel> = [
     homeScore: 1,
     awayTeam: 'Arsenal',
     awayTeamScore: 2
+  },
+  {
+    uuid: gen.Uuid(),
+    date: '09/21/2021',
+    homeTeam: 'Man City',
+    homeScore: 2,
+    awayTeam: 'Chelsea',
+    awayTeamScore: 1
   }
 ];
