@@ -6,11 +6,11 @@ import { TeamMatchesModel } from "@modules/common/models";
 @Injectable()
 export class ResultSystemService {
   private static updateStorage(data?: Array<TeamMatchesModel>): void {
-    localStorage.setItem('league_items', JSON.stringify(data ? data : MOCK_DATA));
+    localStorage.setItem('league_items', JSON.stringify(Object.assign([], MOCK_DATA, data)));
   }
   private static loadLeagueData(): Array<TeamMatchesModel> {
     const storage = localStorage.getItem('league_items');
-    return storage ? JSON.parse(storage) : MOCK_DATA;
+    return storage ? Object.assign([], JSON.parse(storage), MOCK_DATA) : MOCK_DATA;
   }
 
   constructor() {

@@ -9,13 +9,7 @@ export class ResultSystemBase implements OnDestroy {
    */
   readonly toDestroy$ = new Subject<void>();
 
-  /**
-   * Generates new uuid for new entry
-   * @see UuidGenerator
-   */
-  get _uuid(): string {
-    return new UuidGenerator().Uuid()
-  }
+  // TODO: more abstract members
 
   ngOnDestroy(): void {
     this.toDestroy$.next();

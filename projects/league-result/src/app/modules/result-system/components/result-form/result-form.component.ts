@@ -4,6 +4,7 @@ import { ResultSystemService } from '@app/modules/common';
 import { TeamMatchesModel } from '@app/modules/common/models';
 import {ResultSystemBase} from "@modules/result-system/result-system.base";
 import {takeUntil} from "rxjs/operators";
+import {UuidGenerator} from "@modules/common/utils/uuid-generator";
 
 @Component({
   selector: 'app-result-form',
@@ -70,7 +71,7 @@ export class ResultFormComponent extends  ResultSystemBase implements OnChanges 
 
   private initForm(): void {
     this.resultForm = this.fb.group({
-      uuid: this._uuid,
+      uuid: new UuidGenerator()._uuid,
       date: ['', [Validators.required]],
       homeTeam: ['', [Validators.required]],
       homeScore: [0, [Validators.min(0), Validators.required]],
