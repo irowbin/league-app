@@ -62,7 +62,6 @@ export class SimpleTableLibComponent implements OnChanges {
   @Input()
   showRowNumber: boolean;
 
-
   /**
    * Dynamic column props.
    * `dataField` is used to map value from the object.
