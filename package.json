@@ -8,7 +8,8 @@
     "build": "npm run build-lib && ng build",
     "build-lib": "ng build simple-table-lib",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test --watch"
+    "test-watch": "ng test --watch",
+    "test": "ng test"
   },
   "private": true,
   "dependencies": {
