@@ -3,7 +3,7 @@ jobs:
   build:
     working_directory: ~/league-app
     docker:
-      - image: circleci/node:latest
+      - image: circleci/node:14-browsers
         environment:
           CHROME_BIN: /usr/bin/google-chrome
     steps:
