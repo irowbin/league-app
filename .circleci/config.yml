@@ -1,7 +1,7 @@
 version: 2
 jobs:
   build:
-    working_directory: ~/league-app
+    working_directory: ~/league-app/projects/league-result
     docker:
       - image: circleci/node:6-browsers
     steps:
