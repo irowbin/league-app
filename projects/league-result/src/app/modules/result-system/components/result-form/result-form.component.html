@@ -10,8 +10,8 @@
           <button type="button"
                   class="btn-close"
                   data-bs-dismiss="alert"
-                  (click)="invalidForm = false"></button>
-          Invalid form submission. All fields are mandatory.
+                  (click)="invalidForm = null"></button>
+          {{ invalidForm }}
         </div>
         <form (ngSubmit)="saveChanges()"
               [formGroup]="resultForm"
