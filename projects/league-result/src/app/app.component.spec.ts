@@ -2,10 +2,11 @@ import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {By} from '@angular/platform-browser';
 import {RouterTestingModule} from '@angular/router/testing';
 import {AppComponent} from './app.component';
-import { ResultSystemService } from '@modules/common';
+import {ResultSystemService} from '@modules/common';
+import {NO_ERRORS_SCHEMA} from "@angular/core";
 
 describe('AppComponent', () => {
-  let fixture:ComponentFixture<AppComponent>
+  let fixture: ComponentFixture<AppComponent>
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
@@ -14,7 +15,8 @@ describe('AppComponent', () => {
       declarations: [
         AppComponent
       ],
-      providers: [ResultSystemService]
+      providers: [ResultSystemService],
+      schemas: [NO_ERRORS_SCHEMA]
     }).compileComponents();
     fixture = TestBed.createComponent(AppComponent);
   });

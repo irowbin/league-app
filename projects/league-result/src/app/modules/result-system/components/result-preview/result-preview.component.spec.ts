@@ -2,6 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ResultPreviewComponent } from './result-preview.component';
 import {LeagueDataHandlerService} from "@modules/result-system/handlers/league-data-handler.service";
+import {NO_ERRORS_SCHEMA} from "@angular/core";
 
 describe('ResultPreviewComponent', () => {
   let component: ResultPreviewComponent;
@@ -10,7 +11,8 @@ describe('ResultPreviewComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [ ResultPreviewComponent ],
-      providers: [LeagueDataHandlerService]
+      providers: [LeagueDataHandlerService],
+      schemas: [NO_ERRORS_SCHEMA]
     })
     .compileComponents();
   });

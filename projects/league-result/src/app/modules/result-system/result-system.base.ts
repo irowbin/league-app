@@ -18,13 +18,13 @@ export class ResultSystemBase implements OnDestroy {
   /**
    * Result preview ranking computed data
    */
-  resultPreview: Array<{ key: string; value: Array<TeamMatchesModel> }> = []
+  resultPreview: Array<{ key: string; value: Array<TeamMatchesModel> }> = [];
 
   /**
    * Flat team data that will transform as needed for league table or result preview.
    */
   @Input()
-  leagueData: Array<TeamMatchesModel>
+  leagueData: Array<TeamMatchesModel>;
 
   // TODO: more abstract members
 
@@ -35,7 +35,7 @@ export class ResultSystemBase implements OnDestroy {
   ngOnChanges(): void {
     if (!this.leagueData) return;
     this.tableData = this.dataHandlerService.computeRankingResult(this.leagueData);
-    this.resultPreview = this.dataHandlerService.computeViewResults(this.leagueData)
+    this.resultPreview = this.dataHandlerService.computeViewResults(this.leagueData);
   }
 
   // share across components

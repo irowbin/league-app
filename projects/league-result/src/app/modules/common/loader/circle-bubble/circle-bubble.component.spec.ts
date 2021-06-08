@@ -1,6 +1,7 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { CircleBubbleComponent } from './circle-bubble.component';
+import {CircleBubbleComponent} from './circle-bubble.component';
+import {NO_ERRORS_SCHEMA} from "@angular/core";
 
 describe('CircleBubbleComponent', () => {
   let component: CircleBubbleComponent;
@@ -8,9 +9,10 @@ describe('CircleBubbleComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ CircleBubbleComponent ]
+      declarations: [CircleBubbleComponent],
+      schemas: [NO_ERRORS_SCHEMA]
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {
@@ -19,7 +21,7 @@ describe('CircleBubbleComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it('should create CircleBubbleComponent', () => {
     expect(component).toBeTruthy();
   });
 });
