@@ -5,6 +5,10 @@ computes and displays result view sorting desc by date, modify or new entry of t
 # Deployment
 The app is deployed in Heroku. Navigate to this [live preview](http://league-result.herokuapp.com/) link.
 
+# Status
+[![CircleCI](https://circleci.com/gh/irowbin/league-app.svg?style=svg)](https://circleci.com/gh/irowbin/league-app)
+
+
 # Result System App
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 12.0.3.
