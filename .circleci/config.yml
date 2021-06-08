@@ -4,6 +4,8 @@ jobs:
     working_directory: ~/league-app
     docker:
       - image: circleci/node:latest
+        environment:
+          CHROME_BIN: /usr/bin/google-chrome
     steps:
       - checkout
       - restore_cache:
@@ -18,7 +20,7 @@ jobs:
             - ./node_modules
       - run:
           name: unit-test
-          command: npm run test
+          command: npm run test-ci
       - store_artifacts:
           path: test-results.xml
       - run:
