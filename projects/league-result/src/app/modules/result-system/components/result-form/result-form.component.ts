@@ -27,9 +27,9 @@ export class ResultFormComponent extends ResultSystemBase implements OnChanges {
   readonly submitted = new EventEmitter<boolean>()
 
   /**
-   * Whether the form is invalid.
+   * Form  error message shown in the view
    */
-  invalidForm: boolean
+  invalidForm: string
 
   constructor(private fb: FormBuilder,
               private resultService: ResultSystemService,
@@ -83,15 +83,25 @@ export class ResultFormComponent extends ResultSystemBase implements OnChanges {
   }
 
   saveChanges(): void {
-    const payload = this.resultForm.value as TeamMatchesModel
+    const payload = this.resultForm.value as TeamMatchesModel;
     // format date US standard
-    payload.date = ResultFormComponent.toggleDateFormat(payload.date, 'US')
-
-    this.invalidForm = false
+    payload.date = ResultFormComponent.toggleDateFormat(payload.date, 'US');
+    this.invalidForm = null
     if (!this.resultForm.valid) {
-      this.invalidForm = true;
+      this.invalidForm = 'Invalid form submission. All fields are mandatory.';
       return;
     }
+
+    payload.homeTeam = (payload.homeTeam || '').trim().toLowerCase();
+    payload.awayTeam = (payload.awayTeam || '').trim().toLowerCase();
+    const isEqualName = payload.homeTeam.length > 0 &&
+                        payload.awayTeam.length > 0 &&
+                        payload.homeTeam === payload.awayTeam;
+    if(isEqualName){
+      this.invalidForm = 'Home and Away team name cannot be the same.';
+      return;
+    }
+
     // once the update is done, notify to the parent.
     this.resultService.addOrUpdateLeague(this.resultForm.value)
       .pipe(takeUntil(this.toDestroy$))
