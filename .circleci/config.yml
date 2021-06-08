@@ -17,10 +17,10 @@ jobs:
             - ~/.cache/npm
             - ./node_modules
       - run:
-          name: angular-build
-          command: npm ng -- build --prod --aot --no-progress
-      - run:
-          name: angular-test
-          command: npm ng test -- --single-run --no-progress
+          name: unit-test
+          command: npm run test -- --single-run --no-progress
       - store_artifacts:
           path: test-results.xml
+      - run:
+          name: prod-build
+          command: npm run build --prod --aot --no-progress
