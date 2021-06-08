@@ -9,7 +9,8 @@
     "build-lib": "ng build simple-table-lib",
     "watch": "ng build --watch --configuration development",
     "test-watch": "ng test --watch",
-    "test": "ng test"
+    "test": "ng test",
+    "test-ci": "ng test  --no-watch --no-progress --browsers=ChromeHeadlessCI "
   },
   "private": true,
   "dependencies": {
