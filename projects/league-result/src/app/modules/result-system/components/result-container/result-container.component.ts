@@ -22,6 +22,9 @@ export class ResultContainerComponent extends ResultSystemBase implements OnInit
    */
   readonly options = ToolbarTypes
 
+  /**
+   * Selected teams to get modified.
+   */
   selectedTeam: TeamMatchesModel
 
   constructor(public resultService: ResultSystemService,

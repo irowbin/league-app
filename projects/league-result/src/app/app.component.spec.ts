@@ -2,6 +2,7 @@ import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {By} from '@angular/platform-browser';
 import {RouterTestingModule} from '@angular/router/testing';
 import {AppComponent} from './app.component';
+import { ResultSystemService } from '@modules/common';
 
 describe('AppComponent', () => {
   let fixture:ComponentFixture<AppComponent>
@@ -13,6 +14,7 @@ describe('AppComponent', () => {
       declarations: [
         AppComponent
       ],
+      providers: [ResultSystemService]
     }).compileComponents();
     fixture = TestBed.createComponent(AppComponent);
   });

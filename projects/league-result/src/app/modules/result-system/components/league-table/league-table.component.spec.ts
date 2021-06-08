@@ -1,6 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { LeagueTableComponent } from './league-table.component';
+import {LeagueDataHandlerService} from "@modules/result-system/handlers/league-data-handler.service";
+import {NO_ERRORS_SCHEMA} from "@angular/core";
 
 describe('LeagueTableComponent', () => {
   let component: LeagueTableComponent;
@@ -8,7 +10,9 @@ describe('LeagueTableComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ LeagueTableComponent ]
+      declarations: [ LeagueTableComponent ],
+      providers: [LeagueDataHandlerService],
+      schemas: [NO_ERRORS_SCHEMA]
     })
     .compileComponents();
   });

@@ -2,6 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ResultContainerComponent } from './result-container.component';
 import {ResultSystemService} from "@modules/common";
+import {LeagueDataHandlerService} from "@modules/result-system/handlers/league-data-handler.service";
 
 describe('ResultListComponent', () => {
   let component: ResultContainerComponent;
@@ -10,7 +11,7 @@ describe('ResultListComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [ ResultContainerComponent ],
-      providers: [ResultSystemService]
+      providers: [ResultSystemService, LeagueDataHandlerService]
     })
     .compileComponents();
   });

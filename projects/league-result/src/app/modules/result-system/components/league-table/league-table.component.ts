@@ -1,5 +1,5 @@
-import {Component, Input, OnChanges} from '@angular/core';
-import {LeagueChartModel, TeamMatchesModel} from '@app/modules/common/models';
+import {Component, OnChanges} from '@angular/core';
+import {LeagueChartModel} from '@app/modules/common/models';
 import {LeagueDataHandlerService} from '../../handlers/league-data-handler.service';
 import {ResultSystemBase} from "@modules/result-system/result-system.base";
 
