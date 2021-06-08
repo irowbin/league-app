@@ -18,9 +18,9 @@ jobs:
             - ./node_modules
       - run:
           name: unit-test
-          command: npm run test -- --single-run --no-progress
+          command: npm run test
       - store_artifacts:
           path: test-results.xml
       - run:
           name: prod-build
-          command: npm run build --prod --aot --no-progress
+          command: npm run build
