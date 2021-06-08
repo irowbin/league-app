@@ -1,9 +1,9 @@
 version: 2
 jobs:
   build:
-    working_directory: ~/league-app/projects/league-result
+    working_directory: ~/league-app
     docker:
-      - image: circleci/node:6-browsers
+      - image: circleci/node:latest
     steps:
       - checkout
       - restore_cache:
