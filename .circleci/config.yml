@@ -20,7 +20,8 @@ jobs:
             - ./node_modules
       - run:
           name: unit-test
-          command: npm run test-ci
+          # run lib test and app test in the CI
+          command: npm run test-lib-ci && npm run test-ci
       - store_artifacts:
           path: test-results.xml
       - run:
