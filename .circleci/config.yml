@@ -28,8 +28,11 @@ jobs:
           name: unit-test
           # run lib test and app test in the CI
           command: npm run test-lib-ci && npm run test-ci
-      - store_artifacts:
-          path: test-results.xml
+      - store_test_results:
+          path: test-result
       - run:
           name: prod-build
           command: npm run build
+      - store_artifacts:
+          path: build
+ 
