@@ -1,9 +1,11 @@
 version: 2
 jobs:
   build:
-    working_directory: ~/
+    working_directory: ~/league-app
     docker:
-      - image: circleci/node:6-browsers
+      - image: circleci/node:14-browsers
+        environment:
+          CHROME_BIN: /usr/bin/google-chrome
     steps:
       - checkout
       - restore_cache:
@@ -17,10 +19,10 @@ jobs:
             - ~/.cache/npm
             - ./node_modules
       - run:
-          name: angular-build
-          command: npm ng -- build --prod --aot --no-progress
-      - run:
-          name: angular-test
-          command: npm ng test -- --single-run --no-progress
+          name: unit-test
+          command: npm run test-ci
       - store_artifacts:
           path: test-results.xml
+      - run:
+          name: prod-build
+          command: npm run build
