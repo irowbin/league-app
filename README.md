@@ -10,6 +10,7 @@ The app is deployed in Heroku. Navigate to this [live preview](http://league-res
 ## Status
 
 [![CircleCI](https://circleci.com/gh/irowbin/league-app.svg?style=svg)](https://circleci.com/gh/irowbin/league-app)
+![Heroku](https://heroku-badge.herokuapp.com/?app=league-result)
 
 ## Result System App
 
