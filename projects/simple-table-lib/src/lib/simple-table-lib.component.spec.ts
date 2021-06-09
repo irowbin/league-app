@@ -36,6 +36,7 @@ describe('SimpleTableLibComponent', () => {
     component.dataSource = [{ x: 'y' }];
     component.columnConfig = [{ dataField: 'x', caption: 'x' }];
     // act
+    component.ngOnChanges();
     fixture.detectChanges();
     const thead = de.query(By.css('thead'));
     const tbody = de.query(By.css('tbody'));
@@ -80,6 +81,7 @@ describe('SimpleTableLibComponent', () => {
     const css = 'some-css-class';
     component.headerCellClass = css;
     component.columnConfig = [{ dataField: 'x', caption: 'y' }];
+    component.ngOnChanges();
     fixture.detectChanges();
 
     const th = de.query(By.css('table thead th'))
@@ -102,6 +104,7 @@ describe('SimpleTableLibComponent', () => {
     component.cellClass = css;
     component.dataSource = [{ x: 'y' }];
     component.columnConfig = [{ caption: 'x', dataField: 'x' }];
+    component.ngOnChanges();
     fixture.detectChanges();
     const cell = de.query(By.css('table tbody tr td'))
       .nativeElement as HTMLTableCellElement;

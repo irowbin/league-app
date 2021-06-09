@@ -10,7 +10,7 @@
     "watch": "ng build --watch --configuration development",
     "test-watch": "ng test --watch",
     "test": "ng test",
-    "test-ci": "ng test  --no-watch --no-progress --browsers=ChromeHeadlessCI ",
+    "test-ci": "ng test  --no-watch --progress --browsers=ChromeHeadlessCI ",
     "lint": "eslint . --ext .js,.ts",
     "lint-fix": "eslint . --ext .js,.ts --fix",
     "format": "prettier --write \"./**/*.{ts,js,json,md}\""
