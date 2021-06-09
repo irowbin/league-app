@@ -1,17 +1,17 @@
-# About
+## About
 
 This app is developed for tracking rankings of leagues. You can simply enter team names of Home & Away, score and date which will then
 computes and displays result view sorting desc by date, modify or new entry of teams and finally list out all the teams with name, played, won, lost, drawn & total score.
 
-# Deployment
+## Live Demo
 
 The app is deployed in Heroku. Navigate to this [live preview](http://league-result.herokuapp.com/) link.
 
-# Status
+## Status
+
 [![CircleCI](https://circleci.com/gh/irowbin/league-app.svg?style=svg)](https://circleci.com/gh/irowbin/league-app)
 
-
-# Result System App
+## Result System App
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 12.0.3.
 
@@ -32,6 +32,14 @@ It will first build the `simple-table-lib` and then the app.
 
 You can also run `npm run build-lib` which builds the library that has been used within the app. If you make changes on
 library, you need to rebuild or configure script with `--watch` flag so whenever you make changes on library, it runs the incremental builds and reflects the changes in app.
+
+## Running Formatter
+
+Run `npm run format` to execute prettier formatter.
+
+## Running Linter
+
+Run `ng lint` or `npm run lint-fix` to execute linter.
 
 ## Running unit tests
 
