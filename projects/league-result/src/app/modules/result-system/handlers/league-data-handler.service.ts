@@ -1,14 +1,14 @@
-import type {
+import {
   ChartValueType,
   LeagueChartModel,
-  TeamMatchesModel,
+  TeamMatchesModel
 } from '@app/modules/common/models';
 import { Injectable } from '@angular/core';
 
 @Injectable()
 export class LeagueDataHandlerService {
   computeRankingResult(
-    matchPayload: Array<TeamMatchesModel>,
+    matchPayload: Array<TeamMatchesModel>
   ): Array<Partial<LeagueChartModel>> {
     // initial result value
     const initialValue = {
@@ -18,13 +18,13 @@ export class LeagueDataHandlerService {
       lost: 0,
       drawn: 0,
       goalsScored: 0,
-      goalsAgainst: 0,
+      goalsAgainst: 0
     };
 
     // calculate match results
     const matchResult = (
       leagueChart: ChartValueType,
-      match: TeamMatchesModel,
+      match: TeamMatchesModel
     ) => {
       const { homeTeam, awayTeam, homeScore, awayTeamScore } = match;
 
@@ -53,7 +53,7 @@ export class LeagueDataHandlerService {
       leagueChart: ChartValueType,
       teamName: string,
       scored: number,
-      against: number,
+      against: number
     ): void => {
       leagueChart[teamName].goalsScored += scored;
       leagueChart[teamName].goalsAgainst += against;
@@ -72,7 +72,7 @@ export class LeagueDataHandlerService {
 
       // increase the played counter of home & away teams.
       [homeTeam, awayTeam].forEach(
-        (teamName) => leagueChart[teamName].played++,
+        (teamName) => leagueChart[teamName].played++
       );
 
       // calculate teams won,los & drawn scores.
@@ -92,7 +92,7 @@ export class LeagueDataHandlerService {
   }
 
   computeViewResults(
-    matchPayload: Array<TeamMatchesModel>,
+    matchPayload: Array<TeamMatchesModel>
   ): Array<{ key: string; value: Array<TeamMatchesModel> }> {
     // unique dates
     const dates = [...new Set(matchPayload.map((m) => m.date))];
@@ -102,7 +102,7 @@ export class LeagueDataHandlerService {
         const matches = matchPayload.filter((m) => m.date === date);
         results.push({
           key: date,
-          value: matches,
+          value: matches
         });
         return results;
       }, []);

@@ -1,21 +1,19 @@
-import type { ChangeDetectorRef, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectorRef, OnDestroy, OnInit } from '@angular/core';
 import { Component } from '@angular/core';
-import type { ResultSystemService } from '@app/modules/common';
-import type { TeamMatchesModel } from '@app/modules/common/models';
+import { ResultSystemService } from '@app/modules/common';
+import { TeamMatchesModel } from '@app/modules/common/models';
 import { ToolbarTypes } from '@app/modules/common/models';
 import { debounceTime, takeUntil, tap } from 'rxjs/operators';
 import { ResultSystemBase } from '../../result-system.base';
-import type { LeagueDataHandlerService } from '@modules/result-system/handlers/league-data-handler.service';
+import { LeagueDataHandlerService } from '@modules/result-system/handlers/league-data-handler.service';
 
 @Component({
   selector: 'app-result-container',
   templateUrl: './result-container.component.html',
-  styleUrls: ['./result-container.component.scss'],
+  styleUrls: ['./result-container.component.scss']
 })
-export class ResultContainerComponent
-  extends ResultSystemBase
-  implements OnInit, OnDestroy
-{
+export class ResultContainerComponent extends ResultSystemBase
+  implements OnInit, OnDestroy {
   datasource: Array<TeamMatchesModel>;
   /**
    * Default toolbar options as `TABLE` view.
@@ -35,7 +33,7 @@ export class ResultContainerComponent
   constructor(
     public resultService: ResultSystemService,
     public dataHandlerService: LeagueDataHandlerService,
-    private cdr: ChangeDetectorRef,
+    private cdr: ChangeDetectorRef
   ) {
     super(dataHandlerService);
   }
@@ -46,7 +44,7 @@ export class ResultContainerComponent
       .pipe(
         tap(() => (this.datasource = null)),
         debounceTime(100),
-        takeUntil(this.toDestroy$),
+        takeUntil(this.toDestroy$)
       )
       .subscribe((d) => {
         // once the data get updated or emitted from socket changes,

@@ -1,4 +1,4 @@
-import type { ComponentFixture } from '@angular/core/testing';
+import { ComponentFixture } from '@angular/core/testing';
 import { TestBed } from '@angular/core/testing';
 
 import { ResultPreviewComponent } from './result-preview.component';
@@ -13,7 +13,7 @@ describe('ResultPreviewComponent', () => {
     await TestBed.configureTestingModule({
       declarations: [ResultPreviewComponent],
       providers: [LeagueDataHandlerService],
-      schemas: [NO_ERRORS_SCHEMA],
+      schemas: [NO_ERRORS_SCHEMA]
     }).compileComponents();
   });
 

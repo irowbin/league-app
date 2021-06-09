@@ -1,4 +1,4 @@
-import type { ComponentFixture } from '@angular/core/testing';
+import { ComponentFixture } from '@angular/core/testing';
 import { TestBed } from '@angular/core/testing';
 
 import { ResultContainerComponent } from './result-container.component';
@@ -14,7 +14,7 @@ describe('ResultListComponent', () => {
     await TestBed.configureTestingModule({
       declarations: [ResultContainerComponent],
       providers: [ResultSystemService, LeagueDataHandlerService],
-      schemas: [NO_ERRORS_SCHEMA],
+      schemas: [NO_ERRORS_SCHEMA]
     }).compileComponents();
   });
 

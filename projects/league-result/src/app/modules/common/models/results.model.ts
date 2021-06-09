@@ -50,5 +50,5 @@ export type ChartValueType = { [key: string]: Partial<LeagueChartModel> };
 export enum ToolbarTypes {
   'RESULT',
   'NEW_OR_MODIFY',
-  'TABLE',
+  'TABLE'
 }

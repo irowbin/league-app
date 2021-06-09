@@ -17,8 +17,8 @@ const io = require('socket.io')(server, {
     // allowed origin
     origin: 'http://localhost:4200',
     // to any method
-    methods: '*',
-  },
+    methods: '*'
+  }
 });
 
 // endpoints

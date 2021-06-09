@@ -6,8 +6,8 @@ import { WelcomeComponent } from './components/welcome/welcome.component';
 @NgModule({
   imports: [
     CommonModule,
-    RouterModule.forChild([{ path: '', component: WelcomeComponent }]),
+    RouterModule.forChild([{ path: '', component: WelcomeComponent }])
   ],
-  declarations: [WelcomeComponent],
+  declarations: [WelcomeComponent]
 })
 export class WelcomeModule {}

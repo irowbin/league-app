@@ -5,6 +5,6 @@ import { CircleBubbleComponent } from './circle-bubble/circle-bubble.component';
 @NgModule({
   imports: [CommonModule],
   declarations: [CircleBubbleComponent],
-  exports: [CircleBubbleComponent],
+  exports: [CircleBubbleComponent]
 })
 export class LoaderModule {}

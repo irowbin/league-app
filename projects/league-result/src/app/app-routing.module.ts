@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import type { Routes } from '@angular/router';
+import { Routes } from '@angular/router';
 import { RouterModule } from '@angular/router';
 
 const routes: Routes = [
@@ -8,21 +8,21 @@ const routes: Routes = [
     path: 'result-system',
     loadChildren: () =>
       import('./modules/result-system/result-system.module').then(
-        ({ ResultSystemModule }) => ResultSystemModule,
-      ),
+        ({ ResultSystemModule }) => ResultSystemModule
+      )
   },
   {
     path: 'welcome',
     loadChildren: () =>
       import('./modules/intro/intro.module').then(
-        ({ WelcomeModule }) => WelcomeModule,
-      ),
+        ({ WelcomeModule }) => WelcomeModule
+      )
   },
-  { path: '**', redirectTo: '', pathMatch: 'full' },
+  { path: '**', redirectTo: '', pathMatch: 'full' }
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule],
+  exports: [RouterModule]
 })
 export class AppRoutingModule {}

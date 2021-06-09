@@ -1,4 +1,4 @@
-import type { ComponentFixture } from '@angular/core/testing';
+import { ComponentFixture } from '@angular/core/testing';
 import { TestBed } from '@angular/core/testing';
 
 import { ResultFormComponent } from './result-form.component';
@@ -16,7 +16,7 @@ describe('ResultFormComponent', () => {
       declarations: [ResultFormComponent],
       imports: [FormsModule, ReactiveFormsModule],
       providers: [ResultSystemService, LeagueDataHandlerService],
-      schemas: [NO_ERRORS_SCHEMA],
+      schemas: [NO_ERRORS_SCHEMA]
     }).compileComponents();
   });
 

@@ -6,6 +6,6 @@ import { SimpleTableLibModule } from 'simple-table-lib';
 @NgModule({
   imports: [CommonModule, SimpleTableLibModule],
   exports: [LeagueTableComponent],
-  declarations: [LeagueTableComponent],
+  declarations: [LeagueTableComponent]
 })
 export class LeagueTableModule {}

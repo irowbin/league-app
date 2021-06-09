@@ -18,15 +18,15 @@ import { LeagueDataHandlerService } from '@modules/result-system/handlers/league
     LoaderModule,
     LeagueTableModule,
     FormsModule,
-    ReactiveFormsModule,
+    ReactiveFormsModule
   ],
   declarations: [
     ResultSystemComponent,
     ResultContainerComponent,
     ToolbarComponent,
     ResultPreviewComponent,
-    ResultFormComponent,
+    ResultFormComponent
   ],
-  providers: [LeagueDataHandlerService],
+  providers: [LeagueDataHandlerService]
 })
 export class ResultSystemModule {}

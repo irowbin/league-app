@@ -1,8 +1,8 @@
-import type { ComponentFixture } from '@angular/core/testing';
+import { ComponentFixture } from '@angular/core/testing';
 import { TestBed } from '@angular/core/testing';
 
 import { WelcomeComponent } from './welcome.component';
-import type { DebugElement } from '@angular/core';
+import { DebugElement } from '@angular/core';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { findComponent } from '@src/test-util';
 
@@ -14,7 +14,7 @@ describe('WelcomeComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [WelcomeComponent],
-      schemas: [NO_ERRORS_SCHEMA],
+      schemas: [NO_ERRORS_SCHEMA]
     }).compileComponents();
   });
 

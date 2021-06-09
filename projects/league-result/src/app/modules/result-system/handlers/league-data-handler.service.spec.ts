@@ -1,5 +1,5 @@
 import { LeagueDataHandlerService } from '@modules/result-system/handlers/league-data-handler.service';
-import type { TeamMatchesModel } from '@modules/common/models';
+import { TeamMatchesModel } from '@modules/common/models';
 
 describe('LeagueDataHandlerService', () => {
   let service: LeagueDataHandlerService;
@@ -17,7 +17,7 @@ describe('LeagueDataHandlerService', () => {
         awayTeam: teamX,
         awayTeamScore: 2,
         uuid: 'xyz',
-        date: '09/20/2021',
+        date: '09/20/2021'
       },
       {
         homeTeam: teamY,
@@ -25,8 +25,8 @@ describe('LeagueDataHandlerService', () => {
         awayTeam: teamZ,
         awayTeamScore: 1,
         uuid: 'zyx',
-        date: '09/22/2021',
-      },
+        date: '09/22/2021'
+      }
     ];
   });
 

@@ -1,9 +1,9 @@
-import type { ComponentFixture } from '@angular/core/testing';
+import { ComponentFixture } from '@angular/core/testing';
 import { TestBed } from '@angular/core/testing';
 
 import { LeagueTableComponent } from './league-table.component';
 import { LeagueDataHandlerService } from '@modules/result-system/handlers/league-data-handler.service';
-import type { DebugElement } from '@angular/core';
+import { DebugElement } from '@angular/core';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { findComponent } from '@src/test-util';
@@ -17,7 +17,7 @@ describe('LeagueTableComponent', () => {
     await TestBed.configureTestingModule({
       declarations: [LeagueTableComponent],
       providers: [LeagueDataHandlerService],
-      schemas: [NO_ERRORS_SCHEMA],
+      schemas: [NO_ERRORS_SCHEMA]
     }).compileComponents();
   });
 
@@ -59,8 +59,8 @@ describe('LeagueTableComponent', () => {
         homeTeam: 'y',
         homeScore: 0,
         uuid: 'xyz',
-        date: '09/12/12',
-      },
+        date: '09/12/12'
+      }
     ];
     component.ngOnChanges();
     expect(component.tableData.length).toBe(2);

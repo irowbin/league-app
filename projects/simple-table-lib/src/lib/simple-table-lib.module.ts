@@ -5,6 +5,6 @@ import { CommonModule } from '@angular/common';
 @NgModule({
   declarations: [SimpleTableLibComponent],
   imports: [CommonModule],
-  exports: [SimpleTableLibComponent],
+  exports: [SimpleTableLibComponent]
 })
 export class SimpleTableLibModule {}

@@ -1,8 +1,8 @@
-import type { ComponentFixture } from '@angular/core/testing';
+import { ComponentFixture } from '@angular/core/testing';
 import { TestBed } from '@angular/core/testing';
 import { SimpleTableLibComponent } from './simple-table-lib.component';
 import { By } from '@angular/platform-browser';
-import type { DebugElement } from '@angular/core';
+import { DebugElement } from '@angular/core';
 
 describe('SimpleTableLibComponent', () => {
   let component: SimpleTableLibComponent;
@@ -11,7 +11,7 @@ describe('SimpleTableLibComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [SimpleTableLibComponent],
+      declarations: [SimpleTableLibComponent]
     }).compileComponents();
   });
 
@@ -62,7 +62,7 @@ describe('SimpleTableLibComponent', () => {
     expect(thead.queryAll(By.css('th')).length).toBe(2);
     expect(tbody.queryAll(By.css('tr')).length).toBe(1);
     expect(tbody.queryAll(By.css('tr td'))[0].nativeElement.innerText).toBe(
-      '1',
+      '1'
     );
     expect(tbody.queryAll(By.css('tr td')).length).toBe(2);
   });

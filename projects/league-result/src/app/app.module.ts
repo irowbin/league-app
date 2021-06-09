@@ -10,6 +10,6 @@ import { NavbarComponent } from '@modules/layout/navbar/navbar.component';
   declarations: [AppComponent, NavbarComponent],
   imports: [BrowserModule, BrowserAnimationsModule, AppRoutingModule],
   providers: [ResultSystemService],
-  bootstrap: [AppComponent],
+  bootstrap: [AppComponent]
 })
 export class AppModule {}

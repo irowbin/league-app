@@ -1,11 +1,8 @@
-import type { OnDestroy } from '@angular/core';
+import { OnDestroy } from '@angular/core';
 import { Component, Input } from '@angular/core';
 import { Subject } from 'rxjs';
-import type { LeagueDataHandlerService } from '@modules/result-system/handlers/league-data-handler.service';
-import type {
-  LeagueChartModel,
-  TeamMatchesModel,
-} from '@modules/common/models';
+import { LeagueDataHandlerService } from '@modules/result-system/handlers/league-data-handler.service';
+import { LeagueChartModel, TeamMatchesModel } from '@modules/common/models';
 
 @Component({ template: '' })
 export class ResultSystemBase implements OnDestroy {
@@ -38,10 +35,10 @@ export class ResultSystemBase implements OnDestroy {
   ngOnChanges(): void {
     if (!this.leagueData) return;
     this.tableData = this.dataHandlerService.computeRankingResult(
-      this.leagueData,
+      this.leagueData
     );
     this.resultPreview = this.dataHandlerService.computeViewResults(
-      this.leagueData,
+      this.leagueData
     );
   }
 

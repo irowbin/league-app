@@ -1,15 +1,15 @@
-import type { AfterViewInit } from '@angular/core';
+import { AfterViewInit } from '@angular/core';
 import { Component } from '@angular/core';
 import { fadeInOut } from '@modules/common/animations';
 import { socket } from '@modules/common/socket/socket-io.extension';
-import type { TeamMatchesModel } from '@modules/common/models';
-import type { ResultSystemService } from '@modules/common';
+import { TeamMatchesModel } from '@modules/common/models';
+import { ResultSystemService } from '@modules/common';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
-  animations: [fadeInOut],
+  animations: [fadeInOut]
 })
 export class AppComponent implements AfterViewInit {
   constructor(private readonly leagueService: ResultSystemService) {}

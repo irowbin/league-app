@@ -1,4 +1,4 @@
-import type { OnChanges } from '@angular/core';
+import { OnChanges } from '@angular/core';
 import { Component, Input } from '@angular/core';
 
 @Component({
@@ -27,7 +27,7 @@ import { Component, Input } from '@angular/core';
         </tr>
       </tbody>
     </table>
-  `,
+  `
 })
 export class SimpleTableLibComponent implements OnChanges {
   /**

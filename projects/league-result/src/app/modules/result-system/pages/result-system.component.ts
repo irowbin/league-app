@@ -1,10 +1,10 @@
-import type { AfterViewInit, Type } from '@angular/core';
+import { AfterViewInit, Type } from '@angular/core';
 import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-result-system',
   templateUrl: './result-system.component.html',
-  styleUrls: ['./result-system.component.scss'],
+  styleUrls: ['./result-system.component.scss']
 })
 export class ResultSystemComponent implements AfterViewInit {
   /**

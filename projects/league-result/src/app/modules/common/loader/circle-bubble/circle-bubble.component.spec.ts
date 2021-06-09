@@ -1,4 +1,4 @@
-import type { ComponentFixture } from '@angular/core/testing';
+import { ComponentFixture } from '@angular/core/testing';
 import { TestBed } from '@angular/core/testing';
 
 import { CircleBubbleComponent } from './circle-bubble.component';
@@ -11,7 +11,7 @@ describe('CircleBubbleComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [CircleBubbleComponent],
-      schemas: [NO_ERRORS_SCHEMA],
+      schemas: [NO_ERRORS_SCHEMA]
     }).compileComponents();
   });
 

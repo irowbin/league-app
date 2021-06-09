@@ -1,18 +1,18 @@
-import type { OnChanges } from '@angular/core';
+import { OnChanges } from '@angular/core';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import type { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { Validators } from '@angular/forms';
-import type { ResultSystemService } from '@app/modules/common';
-import type { TeamMatchesModel } from '@app/modules/common/models';
+import { ResultSystemService } from '@app/modules/common';
+import { TeamMatchesModel } from '@app/modules/common/models';
 import { ResultSystemBase } from '@modules/result-system/result-system.base';
 import { takeUntil } from 'rxjs/operators';
 import { UuidGenerator } from '@modules/common/utils/uuid-generator';
-import type { LeagueDataHandlerService } from '@modules/result-system/handlers/league-data-handler.service';
+import { LeagueDataHandlerService } from '@modules/result-system/handlers/league-data-handler.service';
 
 @Component({
   selector: 'app-result-form',
   templateUrl: './result-form.component.html',
-  styleUrls: ['./result-form.component.scss'],
+  styleUrls: ['./result-form.component.scss']
 })
 export class ResultFormComponent extends ResultSystemBase implements OnChanges {
   resultForm: FormGroup;
@@ -36,7 +36,7 @@ export class ResultFormComponent extends ResultSystemBase implements OnChanges {
   constructor(
     private fb: FormBuilder,
     private resultService: ResultSystemService,
-    public handlerService: LeagueDataHandlerService,
+    public handlerService: LeagueDataHandlerService
   ) {
     super(handlerService);
     this.initForm();
@@ -44,7 +44,7 @@ export class ResultFormComponent extends ResultSystemBase implements OnChanges {
 
   private static toggleDateFormat(
     date: string,
-    format: 'US' | 'HTML5',
+    format: 'US' | 'HTML5'
   ): string {
     let formatted = '';
     switch (format) {
@@ -73,8 +73,8 @@ export class ResultFormComponent extends ResultSystemBase implements OnChanges {
         ...this.patchTeamValue,
         date: ResultFormComponent.toggleDateFormat(
           this.patchTeamValue.date,
-          'HTML5',
-        ),
+          'HTML5'
+        )
       });
     }
   }
@@ -90,7 +90,7 @@ export class ResultFormComponent extends ResultSystemBase implements OnChanges {
       homeTeam: ['', [Validators.required]],
       homeScore: [0, [Validators.min(0), Validators.required]],
       awayTeam: '',
-      awayTeamScore: [0, [Validators.min(0), Validators.required]],
+      awayTeamScore: [0, [Validators.min(0), Validators.required]]
     });
   }
 

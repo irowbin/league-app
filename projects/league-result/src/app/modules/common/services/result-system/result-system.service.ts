@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import type { Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { BehaviorSubject, of } from 'rxjs';
 import { MOCK_DATA } from '@app/fakeData/static-storage';
-import type { TeamMatchesModel } from '@modules/common/models';
+import { TeamMatchesModel } from '@modules/common/models';
 import { socket } from '../../socket/socket-io.extension';
 import { delay, switchMap, tap } from 'rxjs/operators';
 import { UuidGenerator } from '@modules/common/utils/uuid-generator';
@@ -18,7 +18,7 @@ export class ResultSystemService {
     of(data)
       .pipe(
         tap((d) => ResultSystemService.updateStorage(d)),
-        delay(200),
+        delay(200)
       )
       .subscribe(() => this._notify.next(ResultSystemService.loadLeagueData()));
   }
@@ -27,7 +27,7 @@ export class ResultSystemService {
     const storage = localStorage.getItem('league_items');
     if (!storage)
       ResultSystemService.updateStorage(
-        MOCK_DATA.map((m) => ({ ...m, uuid: gen._uuid })),
+        MOCK_DATA.map((m) => ({ ...m, uuid: gen._uuid }))
       );
   }
 

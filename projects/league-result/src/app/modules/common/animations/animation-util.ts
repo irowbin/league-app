@@ -3,7 +3,7 @@ import {
   query,
   style,
   transition,
-  trigger,
+  trigger
 } from '@angular/animations';
 
 export const fadeInOut = trigger('fadeInOut', [
@@ -18,16 +18,16 @@ export const fadeInOut = trigger('fadeInOut', [
           left: 0,
           width: '100%',
           overflow: 'hidden',
-          opacity: 0,
-        }),
+          opacity: 0
+        })
       ],
-      { optional: true },
+      { optional: true }
     ),
     query(':leave', [animate('300ms ease-out', style({ opacity: 0 }))], {
-      optional: true,
+      optional: true
     }),
     query(':enter', [animate('300ms ease-out', style({ opacity: 1 }))], {
-      optional: true,
-    }),
-  ]),
+      optional: true
+    })
+  ])
 ]);
