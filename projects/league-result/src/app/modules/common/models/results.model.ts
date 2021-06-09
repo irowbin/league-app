@@ -25,7 +25,7 @@ export interface TeamMatchesModel {
   /**
    * Away team score
    */
-  awayTeamScore?: number
+  awayTeamScore?: number;
 }
 
 /**
@@ -45,11 +45,10 @@ export interface LeagueChartModel {
  * Dictionary collection of rankings chart where key would be team name and value would
  * an object with computed props values.
  */
-export type ChartValueType = { [key: string]: Partial<LeagueChartModel> }
+export type ChartValueType = { [key: string]: Partial<LeagueChartModel> };
 
 export enum ToolbarTypes {
   'RESULT',
   'NEW_OR_MODIFY',
-  'TABLE'
+  'TABLE',
 }
-

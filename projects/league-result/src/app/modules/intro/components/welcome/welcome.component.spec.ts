@@ -1,8 +1,10 @@
-import {ComponentFixture, TestBed} from '@angular/core/testing';
+import type { ComponentFixture } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 
-import {WelcomeComponent} from './welcome.component';
-import {DebugElement, NO_ERRORS_SCHEMA} from "@angular/core";
-import {findComponent} from "@src/test-util";
+import { WelcomeComponent } from './welcome.component';
+import type { DebugElement } from '@angular/core';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { findComponent } from '@src/test-util';
 
 describe('WelcomeComponent', () => {
   let component: WelcomeComponent;
@@ -12,9 +14,8 @@ describe('WelcomeComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [WelcomeComponent],
-      schemas: [NO_ERRORS_SCHEMA]
-    })
-      .compileComponents();
+      schemas: [NO_ERRORS_SCHEMA],
+    }).compileComponents();
   });
 
   beforeEach(() => {
@@ -39,5 +40,4 @@ describe('WelcomeComponent', () => {
     expect(anchorTag).toBeDefined();
     expect(anchorTag.attributes.routerLink).toBe('/result-system');
   });
-
 });

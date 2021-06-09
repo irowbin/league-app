@@ -1,10 +1,10 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { ToolbarTypes } from '@app/modules/common/models';
 
 @Component({
   selector: 'app-toolbar',
   templateUrl: './toolbar.component.html',
-  styleUrls: ['./toolbar.component.scss']
+  styleUrls: ['./toolbar.component.scss'],
 })
 export class ToolbarComponent {
   /**
@@ -12,19 +12,19 @@ export class ToolbarComponent {
    * Emits enum value of `ToolbarTypes` on each changes.
    * @see ToolbarTypes
    */
- @Output()
- readonly toolbarChanged = new EventEmitter<ToolbarTypes>()
+  @Output()
+  readonly toolbarChanged = new EventEmitter<ToolbarTypes>();
 
   /**
    * Selection options of toolbar button.
    * @see ToolbarTypes
    */
-  readonly  options = ToolbarTypes
+  readonly options = ToolbarTypes;
 
   /**
    * Sets default to `TABLE` or incoming from parent.
    * @see ToolbarTypes
    */
   @Input()
-  defaultOption = ToolbarTypes.TABLE
+  defaultOption = ToolbarTypes.TABLE;
 }

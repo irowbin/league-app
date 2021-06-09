@@ -1,5 +1,5 @@
-import {LeagueDataHandlerService} from "@modules/result-system/handlers/league-data-handler.service";
-import {TeamMatchesModel} from "@modules/common/models";
+import { LeagueDataHandlerService } from '@modules/result-system/handlers/league-data-handler.service';
+import type { TeamMatchesModel } from '@modules/common/models';
 
 describe('LeagueDataHandlerService', () => {
   let service: LeagueDataHandlerService;
@@ -11,9 +11,23 @@ describe('LeagueDataHandlerService', () => {
   beforeEach(() => {
     service = new LeagueDataHandlerService();
     mockData = [
-      {homeTeam: teamW, homeScore: 1, awayTeam: teamX, awayTeamScore: 2, uuid: 'xyz', date: '09/20/2021'},
-      {homeTeam: teamY, homeScore: 2, awayTeam: teamZ, awayTeamScore: 1, uuid: 'zyx', date: '09/22/2021'},
-    ]
+      {
+        homeTeam: teamW,
+        homeScore: 1,
+        awayTeam: teamX,
+        awayTeamScore: 2,
+        uuid: 'xyz',
+        date: '09/20/2021',
+      },
+      {
+        homeTeam: teamY,
+        homeScore: 2,
+        awayTeam: teamZ,
+        awayTeamScore: 1,
+        uuid: 'zyx',
+        date: '09/22/2021',
+      },
+    ];
   });
 
   it('#computeRankingResult should return valid ranking result', () => {
@@ -26,16 +40,16 @@ describe('LeagueDataHandlerService', () => {
     const result = service.computeViewResults(mockData);
     expect(result).toBeDefined();
     expect(result.length).toBe(2);
-    const sorted = mockData.map(m=>m.date).sort((a,b) => b > a ? 1 : -1)
-    expect(result.map(r=>r.key)).toEqual(sorted);
+    const sorted = mockData.map((m) => m.date).sort((a, b) => (b > a ? 1 : -1));
+    expect(result.map((r) => r.key)).toEqual(sorted);
   });
 
   describe('winner teams', () => {
-    [teamX, teamY].forEach(teamName => {
+    [teamX, teamY].forEach((teamName) => {
       it(`should calculate winner '${teamName}'s WON, LOST, PLAYED, DRAWN, POINTS result`, () => {
         const result = service.computeRankingResult(mockData);
         expect(result).toBeDefined();
-        const team = result.find(x => x.teamName === teamName);
+        const team = result.find((x) => x.teamName === teamName);
         expect(team).toBeDefined();
         expect(team.lost).toBe(0);
         expect(team.played).toBe(1);
@@ -47,11 +61,11 @@ describe('LeagueDataHandlerService', () => {
   });
 
   describe('loser teams', () => {
-    [teamW, teamZ].forEach(teamName => {
+    [teamW, teamZ].forEach((teamName) => {
       it(`should calculate loser '${teamName}'s WON, LOST, PLAYED, DRAWN, POINTS result`, () => {
         const result = service.computeRankingResult(mockData);
         expect(result).toBeDefined();
-        const team = result.find(x => x.teamName === teamName);
+        const team = result.find((x) => x.teamName === teamName);
         expect(team).toBeDefined();
         expect(team.lost).toBe(1);
         expect(team.played).toBe(1);

@@ -1,6 +1,6 @@
-import {ComponentFixture} from "@angular/core/testing";
-import {DebugElement} from "@angular/core";
-import {By} from "@angular/platform-browser";
+import type { ComponentFixture } from '@angular/core/testing';
+import type { DebugElement } from '@angular/core';
+import { By } from '@angular/platform-browser';
 
 export function findComponent<T>(
   fixture: ComponentFixture<T>,

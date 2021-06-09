@@ -1,45 +1,50 @@
-import {Injectable} from '@angular/core';
-import {BehaviorSubject, combineLatest, merge, Observable, of, race, Subject} from 'rxjs';
-import {MOCK_DATA} from '@app/fakeData/static-storage';
-import {TeamMatchesModel} from '@modules/common/models';
-import {socket} from '../../socket/socket-io.extension';
-import {delay, switchMap, tap} from "rxjs/operators";
-import {UuidGenerator} from "@modules/common/utils/uuid-generator";
+import { Injectable } from '@angular/core';
+import type { Observable } from 'rxjs';
+import { BehaviorSubject, of } from 'rxjs';
+import { MOCK_DATA } from '@app/fakeData/static-storage';
+import type { TeamMatchesModel } from '@modules/common/models';
+import { socket } from '../../socket/socket-io.extension';
+import { delay, switchMap, tap } from 'rxjs/operators';
+import { UuidGenerator } from '@modules/common/utils/uuid-generator';
 
-const gen = new UuidGenerator()
+const gen = new UuidGenerator();
 
 @Injectable()
 export class ResultSystemService {
-
   private readonly _notify = new BehaviorSubject<Array<TeamMatchesModel>>([]);
 
   set syncStorageData(data: Array<TeamMatchesModel>) {
     if (!data) return;
-    of(data).pipe(
-      tap(d => ResultSystemService.updateStorage(data)),
-      delay(200)
-    ).subscribe(() => this._notify.next(ResultSystemService.loadLeagueData()));
+    of(data)
+      .pipe(
+        tap((d) => ResultSystemService.updateStorage(d)),
+        delay(200),
+      )
+      .subscribe(() => this._notify.next(ResultSystemService.loadLeagueData()));
   }
 
   constructor() {
     const storage = localStorage.getItem('league_items');
     if (!storage)
-      ResultSystemService.updateStorage(MOCK_DATA.map(m => ({...m, uuid: gen._uuid})));
+      ResultSystemService.updateStorage(
+        MOCK_DATA.map((m) => ({ ...m, uuid: gen._uuid })),
+      );
   }
 
   /**
    * Dedupe and return the updated version of data.
    * @param data
    */
-  private static dedupeData = (data: Array<TeamMatchesModel>) => [...(data || [])].reduce((accum, el) => {
-    const index = accum.findIndex(u => u.uuid === el.uuid)
-    if (index > -1) {
-      accum[index] = {...accum[index], ...el};
-    } else {
-      accum.push(el);
-    }
-    return accum;
-  }, [] as Array<TeamMatchesModel>);
+  private static dedupeData = (data: Array<TeamMatchesModel>) =>
+    [...(data || [])].reduce((accum, el) => {
+      const index = accum.findIndex((u) => u.uuid === el.uuid);
+      if (index > -1) {
+        accum[index] = { ...accum[index], ...el };
+      } else {
+        accum.push(el);
+      }
+      return accum;
+    }, [] as Array<TeamMatchesModel>);
 
   /**
    * Update most recent data into the local storage
@@ -62,9 +67,7 @@ export class ResultSystemService {
    * Fetches league data
    */
   fetchLeagueData(): Observable<Array<TeamMatchesModel>> {
-    const obs = of(null).pipe(
-      switchMap(() => this._notify)
-    );
+    const obs = of(null).pipe(switchMap(() => this._notify));
     this._notify.next(ResultSystemService.loadLeagueData());
     return obs;
   }
@@ -74,7 +77,7 @@ export class ResultSystemService {
    */
   fetchLeague(uuid: string): Observable<TeamMatchesModel> {
     const data = ResultSystemService.loadLeagueData();
-    return of(data.find(t => t.uuid === uuid));
+    return of(data.find((t) => t.uuid === uuid));
   }
 
   /**
@@ -83,15 +86,15 @@ export class ResultSystemService {
    */
   addOrUpdateLeague(payload: TeamMatchesModel): Observable<boolean> {
     const data = ResultSystemService.loadLeagueData();
-    const found = data.find(i => i.uuid === payload.uuid);
+    const found = data.find((i) => i.uuid === payload.uuid);
     if (found) {
       // probably need to optimize
-      data[data.indexOf(found)] = {...found, ...payload}
+      data[data.indexOf(found)] = { ...found, ...payload };
     } else {
-      data.push({...payload});
+      data.push({ ...payload });
     }
     ResultSystemService.updateStorage(data);
-    socket.emit('SYNC_LEAGUE', ResultSystemService.loadLeagueData())
+    socket.emit('SYNC_LEAGUE', ResultSystemService.loadLeagueData());
     return of(true);
   }
 }

@@ -1,17 +1,13 @@
-import {NgModule} from "@angular/core";
-import {CommonModule} from "@angular/common";
-import {RouterModule} from "@angular/router";
-import {WelcomeComponent} from "./components/welcome/welcome.component";
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
+import { WelcomeComponent } from './components/welcome/welcome.component';
 
 @NgModule({
   imports: [
     CommonModule,
-    RouterModule.forChild(
-      [
-        {path: '', component: WelcomeComponent}
-      ]
-    )],
-  declarations: [WelcomeComponent]
+    RouterModule.forChild([{ path: '', component: WelcomeComponent }]),
+  ],
+  declarations: [WelcomeComponent],
 })
-export class WelcomeModule {
-}
+export class WelcomeModule {}

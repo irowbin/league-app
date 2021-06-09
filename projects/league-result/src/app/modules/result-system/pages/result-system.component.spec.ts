@@ -1,7 +1,8 @@
-import {ComponentFixture, TestBed} from '@angular/core/testing';
+import type { ComponentFixture } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 
-import {ResultSystemComponent} from './result-system.component';
-import {NO_ERRORS_SCHEMA} from "@angular/core";
+import { ResultSystemComponent } from './result-system.component';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 
 describe('ResultSystemComponent', () => {
   let component: ResultSystemComponent;
@@ -10,9 +11,8 @@ describe('ResultSystemComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [ResultSystemComponent],
-      schemas: [NO_ERRORS_SCHEMA]
-    })
-      .compileComponents();
+      schemas: [NO_ERRORS_SCHEMA],
+    }).compileComponents();
   });
 
   beforeEach(() => {

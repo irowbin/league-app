@@ -1,7 +1,8 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import type { ComponentFixture } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 
 import { ToolbarComponent } from './toolbar.component';
-import {NO_ERRORS_SCHEMA} from "@angular/core";
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 
 describe('ToolbarComponent', () => {
   let component: ToolbarComponent;
@@ -9,10 +10,9 @@ describe('ToolbarComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ToolbarComponent ],
-      schemas: [NO_ERRORS_SCHEMA]
-    })
-    .compileComponents();
+      declarations: [ToolbarComponent],
+      schemas: [NO_ERRORS_SCHEMA],
+    }).compileComponents();
   });
 
   beforeEach(() => {

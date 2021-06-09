@@ -1,49 +1,59 @@
-import {ChangeDetectorRef, Component, OnDestroy, OnInit} from '@angular/core';
-import {ResultSystemService} from '@app/modules/common';
-import {TeamMatchesModel, ToolbarTypes} from '@app/modules/common/models';
-import {debounceTime, takeUntil, tap} from "rxjs/operators";
-import {ResultSystemBase} from '../../result-system.base';
-import {LeagueDataHandlerService} from "@modules/result-system/handlers/league-data-handler.service";
+import type { ChangeDetectorRef, OnDestroy, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import type { ResultSystemService } from '@app/modules/common';
+import type { TeamMatchesModel } from '@app/modules/common/models';
+import { ToolbarTypes } from '@app/modules/common/models';
+import { debounceTime, takeUntil, tap } from 'rxjs/operators';
+import { ResultSystemBase } from '../../result-system.base';
+import type { LeagueDataHandlerService } from '@modules/result-system/handlers/league-data-handler.service';
 
 @Component({
   selector: 'app-result-container',
   templateUrl: './result-container.component.html',
-  styleUrls: ['./result-container.component.scss']
+  styleUrls: ['./result-container.component.scss'],
 })
-export class ResultContainerComponent extends ResultSystemBase implements OnInit, OnDestroy {
-  datasource: Array<TeamMatchesModel>
+export class ResultContainerComponent
+  extends ResultSystemBase
+  implements OnInit, OnDestroy
+{
+  datasource: Array<TeamMatchesModel>;
   /**
    * Default toolbar options as `TABLE` view.
    */
-  selectedToolbarOption: ToolbarTypes = ToolbarTypes.TABLE
+  selectedToolbarOption: ToolbarTypes = ToolbarTypes.TABLE;
 
   /**
    * Toolbar options
    */
-  readonly options = ToolbarTypes
+  readonly options = ToolbarTypes;
 
   /**
    * Selected teams to get modified.
    */
-  selectedTeam: TeamMatchesModel
+  selectedTeam: TeamMatchesModel;
 
-  constructor(public resultService: ResultSystemService,
-              public dataHandlerService: LeagueDataHandlerService,
-              private cdr: ChangeDetectorRef) {
+  constructor(
+    public resultService: ResultSystemService,
+    public dataHandlerService: LeagueDataHandlerService,
+    private cdr: ChangeDetectorRef,
+  ) {
     super(dataHandlerService);
   }
 
   private initData(): void {
-    this.resultService.fetchLeagueData().pipe(
-      tap(() => this.datasource = null),
-      debounceTime(100),
-      takeUntil(this.toDestroy$)
-    ).subscribe(d => {
-      // once the data get updated or emitted from socket changes,
-      // need to call the change detector to reflect changes on peer UI
-      this.datasource = d
-      this.cdr.detectChanges();
-    })
+    this.resultService
+      .fetchLeagueData()
+      .pipe(
+        tap(() => (this.datasource = null)),
+        debounceTime(100),
+        takeUntil(this.toDestroy$),
+      )
+      .subscribe((d) => {
+        // once the data get updated or emitted from socket changes,
+        // need to call the change detector to reflect changes on peer UI
+        this.datasource = d;
+        this.cdr.detectChanges();
+      });
   }
 
   ngOnInit(): void {
@@ -59,9 +69,9 @@ export class ResultContainerComponent extends ResultSystemBase implements OnInit
    * @param option Currently selected toolbar option.
    */
   toolbarChanged(option: ToolbarTypes): void {
-    this.selectedToolbarOption = option
+    this.selectedToolbarOption = option;
     // when
-    this.selectedTeam = null
+    this.selectedTeam = null;
   }
 
   /**
@@ -70,7 +80,7 @@ export class ResultContainerComponent extends ResultSystemBase implements OnInit
    */
   async onTeamSelected(uuid: string): Promise<void> {
     this.selectedTeam = await this.resultService.fetchLeague(uuid).toPromise();
-    this.selectedToolbarOption = ToolbarTypes.NEW_OR_MODIFY
+    this.selectedToolbarOption = ToolbarTypes.NEW_OR_MODIFY;
   }
 
   /**
@@ -86,5 +96,4 @@ export class ResultContainerComponent extends ResultSystemBase implements OnInit
     // finally re-populate the data.
     this.initData();
   }
-
 }

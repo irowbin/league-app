@@ -105,9 +105,7 @@
               "projects/league-result/src/favicon.ico",
               "projects/league-result/src/assets"
             ],
-            "styles": [
-              "projects/league-result/src/styles.scss"
-            ],
+            "styles": ["projects/league-result/src/styles.scss"],
             "scripts": []
           }
         }

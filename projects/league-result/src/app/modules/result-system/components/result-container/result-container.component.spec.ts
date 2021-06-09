@@ -1,9 +1,10 @@
-import {ComponentFixture, TestBed} from '@angular/core/testing';
+import type { ComponentFixture } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 
-import {ResultContainerComponent} from './result-container.component';
-import {ResultSystemService} from "@modules/common";
-import {LeagueDataHandlerService} from "@modules/result-system/handlers/league-data-handler.service";
-import {NO_ERRORS_SCHEMA} from "@angular/core";
+import { ResultContainerComponent } from './result-container.component';
+import { ResultSystemService } from '@modules/common';
+import { LeagueDataHandlerService } from '@modules/result-system/handlers/league-data-handler.service';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 
 describe('ResultListComponent', () => {
   let component: ResultContainerComponent;
@@ -13,9 +14,8 @@ describe('ResultListComponent', () => {
     await TestBed.configureTestingModule({
       declarations: [ResultContainerComponent],
       providers: [ResultSystemService, LeagueDataHandlerService],
-      schemas: [NO_ERRORS_SCHEMA]
-    })
-      .compileComponents();
+      schemas: [NO_ERRORS_SCHEMA],
+    }).compileComponents();
   });
 
   beforeEach(() => {

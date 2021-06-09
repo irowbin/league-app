@@ -1,0 +1,13 @@
+/dist/**
+/node_modules/**
+/coverage/**
+karma.conf.js
+postcss.config.js
+stylelint.config.js
+tests.bundle.js
+babel.config.js
+jest.config.js
+server.js
+*.server.js
+/fixtures/**
+/__snapshots__/**
