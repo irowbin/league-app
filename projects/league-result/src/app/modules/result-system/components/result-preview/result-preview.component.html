@@ -9,7 +9,7 @@
         <div class="mb-1 d-flex justify-content-between align-items-center list-group-item list-group-item-action "
              *ngFor="let team of row.value"
              (click)="teamSelected.emit(team.uuid)">
-          <div class="col col-auto">
+          <div class="col-5">
            <span [ngClass]="team.homeScore > team.awayTeamScore ? 'text-success' : ''">
              {{ team.homeTeam }}
            </span>
@@ -17,8 +17,8 @@
                   [ngClass]="team.homeScore > team.awayTeamScore ? 'bg-success' : 'bg-secondary'"
             >{{ team.homeScore }} </span>
           </div>
-          <div class="col-1">VS</div>
-          <div class="col col-auto">
+          <div class="col-2 text-center">VS</div>
+          <div class="col-5 text-end">
             <span [ngClass]="team.awayTeamScore > team.homeScore ? 'text-success' : ''">
              {{ team.awayTeam }}
            </span>

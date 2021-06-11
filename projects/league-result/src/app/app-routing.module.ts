@@ -18,7 +18,7 @@ const routes: Routes = [
         ({ WelcomeModule }) => WelcomeModule
       )
   },
-  { path: '**', redirectTo: '', pathMatch: 'full' }
+  { path: '**', redirectTo: 'welcome', pathMatch: 'full' }
 ];
 
 @NgModule({
