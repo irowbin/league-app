@@ -22,7 +22,7 @@
       ],
       "@app/*": ["./projects/league-result/src/app/*"],
       "@src/*": ["./projects/league-result/src/*"],
-      "@modules/*": ["./projects/league-result/src/app/modules/*"],
+      "@modules/*": ["./projects/league-result/src/app/modules/*"]
     },
     "target": "es2017",
     "module": "es2020",

@@ -1,44 +1,43 @@
-import {OnChanges} from '@angular/core';
-import {Component, Input} from '@angular/core';
+import { OnChanges } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
-export type DataSource<T> = T
+export type DataSource<T> = T;
 
 @Component({
   selector: 'demo-simple-table',
   template: `
     <table [ngClass]="tableClass">
       <thead>
-      <tr>
-        <th *ngFor="let prop of columnProps"
-            [ngClass]="headerCellClass">
-          {{ prop.caption }}
-        </th>
-      </tr>
+        <tr>
+          <th *ngFor="let prop of columnProps" [ngClass]="headerCellClass">
+            {{ prop.caption }}
+          </th>
+        </tr>
       </thead>
       <tbody>
-      <tr
-        *ngFor="let item of source; index as index"
-        [ngClass]="rowClass"
-      >
-        <td *ngFor="let prop of columnProps"
-            [ngClass]="cellClass">
-          {{
-          showRowNumber && prop.dataField === '#'
-            ? index + 1
-            : isObjectType ? item[prop.dataField] : isValueType ? item : ''
-          }}
-        </td>
-      </tr>
+        <tr *ngFor="let item of source; index as index" [ngClass]="rowClass">
+          <td *ngFor="let prop of columnProps" [ngClass]="cellClass">
+            {{
+              showRowNumber && prop.dataField === '#'
+                ? index + 1
+                : isObjectType
+                ? item[prop.dataField]
+                : isValueType
+                ? item
+                : ''
+            }}
+          </td>
+        </tr>
       </tbody>
     </table>
   `
 })
 export class SimpleTableLibComponent implements OnChanges {
-  source: DataSource<Array<any>> = []
+  source: DataSource<Array<any>> = [];
 
-  isValueType: boolean
+  isValueType: boolean;
 
-  isObjectType: boolean
+  isObjectType: boolean;
 
   /**
    * Data source reference
@@ -47,17 +46,23 @@ export class SimpleTableLibComponent implements OnChanges {
   set dataSource(s: DataSource<Array<any>>) {
     if (!s) return;
 
-    const isIterable = Array.isArray(s)
+    const isIterable = Array.isArray(s);
 
     if (!isIterable) {
-      throw Error('datasource should be an array but found ' + typeof s + ' instead')
+      throw Error(
+        'datasource should be an array but found ' + typeof s + ' instead'
+      );
     }
 
-    this.isObjectType = s.some(o => !Array.isArray(o) && typeof o === 'object' && typeof o !== 'function');
-    this.isValueType = s.some(o => typeof o !== 'object' && typeof o !== 'function');
+    this.isObjectType = s.some(
+      (o) =>
+        !Array.isArray(o) && typeof o === 'object' && typeof o !== 'function'
+    );
+    this.isValueType = s.some(
+      (o) => typeof o !== 'object' && typeof o !== 'function'
+    );
 
-    this.source = s
-
+    this.source = s;
   }
 
   /**
@@ -103,9 +108,9 @@ export class SimpleTableLibComponent implements OnChanges {
   ngOnChanges(): void {
     if (!this.columnConfig) return;
     // don't just mutate the origin, make a new copy of it and use locally.
-    const copy = this.columnConfig.map((c) => ({...c}));
+    const copy = this.columnConfig.map((c) => ({ ...c }));
     this.columnProps = this.showRowNumber
-      ? [{caption: '#', dataField: '#'}, ...copy]
+      ? [{ caption: '#', dataField: '#' }, ...copy]
       : copy;
   }
 

@@ -5,14 +5,6 @@
         {{ patchTeamValue ? 'Update Result' : 'Create New Result' }}
       </div>
       <div class="card-body">
-        <div class="alert alert-dismissible alert-danger"
-             *ngIf="invalidForm">
-          <button type="button"
-                  class="btn-close"
-                  data-bs-dismiss="alert"
-                  (click)="invalidForm = null"></button>
-          {{ invalidForm }}
-        </div>
         <form (ngSubmit)="saveChanges()"
               [formGroup]="resultForm"
               autocomplete="off">
@@ -23,6 +15,14 @@
                      class="form-control form-control-sm"
                      id="home-team"
                      formControlName="homeTeam">
+              <span *ngIf="errors['homeTeam']"
+                    class="mb-3 text-danger">
+                {{
+                errors['homeTeam']['required'] ? 'required' :
+                  errors['homeTeam']['match'] ?
+                    'Home team name cannot be the same with away team name' : ''
+                }}
+              </span>
             </div>
             <div class="form-group col-6">
               <label for="away-team">Away Team Name</label>
@@ -30,6 +30,12 @@
                      class="form-control form-control-sm"
                      id="away-team"
                      formControlName="awayTeam">
+              <span *ngIf="errors['awayTeam']"
+                    class="mb-3 text-danger">
+                {{ errors['awayTeam']['required'] ? 'required' :
+                errors['awayTeam']['match'] ?
+                  'Away team name cannot be the same with home team name' : ''}}
+              </span>
             </div>
           </div>
           <div class="form-row row">
@@ -39,6 +45,10 @@
                      class="form-control form-control-sm"
                      id="home-team-score"
                      formControlName="homeScore">
+              <span *ngIf="errors['homeScore']"
+                    class="mb-3 text-danger">
+                {{ errors['homeScore']['required'] ? 'required' : 'only positive non decimal integer allowed' }}
+              </span>
             </div>
             <div class="form-group col-6">
               <label for="away-team-score">Away Team Score</label>
@@ -46,6 +56,10 @@
                      class="form-control form-control-sm"
                      id="away-team-score"
                      formControlName="awayTeamScore">
+              <span *ngIf="errors['awayTeamScore']"
+                    class="mb-3 text-danger">
+                {{ errors['awayTeamScore']['required'] ? 'required' : 'only positive non decimal integer allowed' }}
+              </span>
             </div>
           </div>
           <div class="form-row row">
@@ -55,6 +69,10 @@
                      class="form-control form-control-sm"
                      id="date"
                      formControlName="date">
+              <span *ngIf="errors['date']"
+                    class="mb-3 text-danger">
+                {{ errors['date']['required'] ? 'required' : '' }}
+              </span>
             </div>
           </div>
           <button type="submit"
