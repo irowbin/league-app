@@ -24,7 +24,7 @@ export class ResultSystemService {
   }
 
   constructor() {
-    const storage = localStorage.getItem('league_items');
+    const storage = sessionStorage.getItem('league_items');
     if (!storage)
       ResultSystemService.updateStorage(
         MOCK_DATA.map((m) => ({ ...m, uuid: gen._uuid }))
@@ -52,14 +52,14 @@ export class ResultSystemService {
    * @see dedupeData
    */
   private static updateStorage(data?: Array<TeamMatchesModel>): void {
-    localStorage.setItem('league_items', JSON.stringify(data));
+    sessionStorage.setItem('league_items', JSON.stringify(data));
   }
 
   /**
    * Check on local storage saved data and merge with static or static only which then return by deduping it.
    */
   private static loadLeagueData(): Array<TeamMatchesModel> {
-    const storage = localStorage.getItem('league_items');
+    const storage = sessionStorage.getItem('league_items');
     return ResultSystemService.dedupeData(JSON.parse(storage) || []);
   }
 
