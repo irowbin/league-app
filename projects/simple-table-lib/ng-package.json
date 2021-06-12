@@ -1,6 +1,6 @@
 {
   "$schema": "../../node_modules/ng-packagr/ng-package.schema.json",
-  "dest": "../../dist/simple-table-lib",
+  "dest": "../dist/table-lib/simple-table",
   "lib": {
     "entryFile": "src/projects.ts"
   }

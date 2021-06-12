@@ -1,0 +1,6 @@
+/*
+ * Public API Surface of simple-table-lib
+ */
+export * from './lib/simple-table-lib.component';
+export * from './lib/simple-table-lib.module';
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoicHJvamVjdHMuanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyIuLi8uLi8uLi8uLi9zaW1wbGUtdGFibGUtbGliL3NyYy9wcm9qZWN0cy50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTs7R0FFRztBQUVILGNBQWMsa0NBQWtDLENBQUM7QUFDakQsY0FBYywrQkFBK0IsQ0FBQyIsInNvdXJjZXNDb250ZW50IjpbIi8qXG4gKiBQdWJsaWMgQVBJIFN1cmZhY2Ugb2Ygc2ltcGxlLXRhYmxlLWxpYlxuICovXG5cbmV4cG9ydCAqIGZyb20gJy4vbGliL3NpbXBsZS10YWJsZS1saWIuY29tcG9uZW50JztcbmV4cG9ydCAqIGZyb20gJy4vbGliL3NpbXBsZS10YWJsZS1saWIubW9kdWxlJztcbiJdfQ==
