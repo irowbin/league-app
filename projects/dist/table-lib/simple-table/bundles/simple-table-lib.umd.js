@@ -341,10 +341,7 @@
 
     var SimpleTableLibComponent = /** @class */ (function () {
         function SimpleTableLibComponent() {
-            /**
-             * Data source reference
-             */
-            this.dataSource = [];
+            this.source = [];
             /**
              * Apply css class to the table.
              */
@@ -362,6 +359,24 @@
              */
             this.rowClass = '';
         }
+        Object.defineProperty(SimpleTableLibComponent.prototype, "dataSource", {
+            /**
+             * Data source reference
+             */
+            set: function (s) {
+                if (!s)
+                    return;
+                var isIterable = Array.isArray(s);
+                if (!isIterable) {
+                    throw Error('datasource should be an array but found ' + typeof s + ' instead');
+                }
+                this.isObjectType = s.some(function (o) { return !Array.isArray(o) && typeof o === 'object' && typeof o !== 'function'; });
+                this.isValueType = s.some(function (o) { return typeof o !== 'object' && typeof o !== 'function'; });
+                this.source = s;
+            },
+            enumerable: false,
+            configurable: true
+        });
         SimpleTableLibComponent.prototype.ngOnChanges = function () {
             if (!this.columnConfig)
                 return;
@@ -373,12 +388,12 @@
         return SimpleTableLibComponent;
     }());
     SimpleTableLibComponent.ɵfac = i0__namespace.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "12.0.3", ngImport: i0__namespace, type: SimpleTableLibComponent, deps: [], target: i0__namespace.ɵɵFactoryTarget.Component });
-    SimpleTableLibComponent.ɵcmp = i0__namespace.ɵɵngDeclareComponent({ minVersion: "12.0.0", version: "12.0.3", type: SimpleTableLibComponent, selector: "demo-simple-table", inputs: { dataSource: "dataSource", tableClass: "tableClass", headerCellClass: "headerCellClass", cellClass: "cellClass", rowClass: "rowClass", showRowNumber: "showRowNumber", columnConfig: "columnConfig" }, usesOnChanges: true, ngImport: i0__namespace, template: "\n    <table [ngClass]=\"tableClass\">\n      <thead>\n      <tr>\n        <th *ngFor=\"let prop of columnProps\"\n            [ngClass]=\"headerCellClass\">\n          {{ prop.caption }}\n        </th>\n      </tr>\n      </thead>\n      <tbody>\n      <tr\n        *ngFor=\"let item of dataSource; index as index\"\n        [ngClass]=\"rowClass\"\n      >\n        <td *ngFor=\"let prop of columnProps\"\n            [ngClass]=\"cellClass\">\n          {{\n          showRowNumber && prop.dataField === '#'\n            ? index + 1\n            : item[prop.dataField]\n          }}\n        </td>\n      </tr>\n      </tbody>\n    </table>\n  ", isInline: true, directives: [{ type: i1__namespace.NgClass, selector: "[ngClass]", inputs: ["class", "ngClass"] }, { type: i1__namespace.NgForOf, selector: "[ngFor][ngForOf]", inputs: ["ngForOf", "ngForTrackBy", "ngForTemplate"] }] });
+    SimpleTableLibComponent.ɵcmp = i0__namespace.ɵɵngDeclareComponent({ minVersion: "12.0.0", version: "12.0.3", type: SimpleTableLibComponent, selector: "demo-simple-table", inputs: { dataSource: "dataSource", tableClass: "tableClass", headerCellClass: "headerCellClass", cellClass: "cellClass", rowClass: "rowClass", showRowNumber: "showRowNumber", columnConfig: "columnConfig" }, usesOnChanges: true, ngImport: i0__namespace, template: "\n    <table [ngClass]=\"tableClass\">\n      <thead>\n      <tr>\n        <th *ngFor=\"let prop of columnProps\"\n            [ngClass]=\"headerCellClass\">\n          {{ prop.caption }}\n        </th>\n      </tr>\n      </thead>\n      <tbody>\n      <tr\n        *ngFor=\"let item of source; index as index\"\n        [ngClass]=\"rowClass\"\n      >\n        <td *ngFor=\"let prop of columnProps\"\n            [ngClass]=\"cellClass\">\n          {{\n          showRowNumber && prop.dataField === '#'\n            ? index + 1\n            : isObjectType ? item[prop.dataField] : isValueType ? item : ''\n          }}\n        </td>\n      </tr>\n      </tbody>\n    </table>\n  ", isInline: true, directives: [{ type: i1__namespace.NgClass, selector: "[ngClass]", inputs: ["class", "ngClass"] }, { type: i1__namespace.NgForOf, selector: "[ngFor][ngForOf]", inputs: ["ngForOf", "ngForTrackBy", "ngForTemplate"] }] });
     i0__namespace.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "12.0.3", ngImport: i0__namespace, type: SimpleTableLibComponent, decorators: [{
                 type: i0.Component,
                 args: [{
                         selector: 'demo-simple-table',
-                        template: "\n    <table [ngClass]=\"tableClass\">\n      <thead>\n      <tr>\n        <th *ngFor=\"let prop of columnProps\"\n            [ngClass]=\"headerCellClass\">\n          {{ prop.caption }}\n        </th>\n      </tr>\n      </thead>\n      <tbody>\n      <tr\n        *ngFor=\"let item of dataSource; index as index\"\n        [ngClass]=\"rowClass\"\n      >\n        <td *ngFor=\"let prop of columnProps\"\n            [ngClass]=\"cellClass\">\n          {{\n          showRowNumber && prop.dataField === '#'\n            ? index + 1\n            : item[prop.dataField]\n          }}\n        </td>\n      </tr>\n      </tbody>\n    </table>\n  "
+                        template: "\n    <table [ngClass]=\"tableClass\">\n      <thead>\n      <tr>\n        <th *ngFor=\"let prop of columnProps\"\n            [ngClass]=\"headerCellClass\">\n          {{ prop.caption }}\n        </th>\n      </tr>\n      </thead>\n      <tbody>\n      <tr\n        *ngFor=\"let item of source; index as index\"\n        [ngClass]=\"rowClass\"\n      >\n        <td *ngFor=\"let prop of columnProps\"\n            [ngClass]=\"cellClass\">\n          {{\n          showRowNumber && prop.dataField === '#'\n            ? index + 1\n            : isObjectType ? item[prop.dataField] : isValueType ? item : ''\n          }}\n        </td>\n      </tr>\n      </tbody>\n    </table>\n  "
                     }]
             }], propDecorators: { dataSource: [{
                     type: i0.Input

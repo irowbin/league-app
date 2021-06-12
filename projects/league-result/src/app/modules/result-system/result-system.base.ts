@@ -3,6 +3,7 @@ import { Component, Input } from '@angular/core';
 import { Subject } from 'rxjs';
 import { LeagueDataHandlerService } from '@modules/result-system/handlers/league-data-handler.service';
 import { LeagueChartModel, TeamMatchesModel } from '@modules/common/models';
+import {DataSource} from "simple-table-lib";
 
 @Component({ template: '' })
 export class ResultSystemBase implements OnDestroy {
@@ -14,7 +15,7 @@ export class ResultSystemBase implements OnDestroy {
   /**
    * League ranking computed data
    */
-  tableData: Array<Partial<LeagueChartModel>> = [];
+  tableData:DataSource<Array<Partial<LeagueChartModel>>> = [];
 
   /**
    * Result preview ranking computed data

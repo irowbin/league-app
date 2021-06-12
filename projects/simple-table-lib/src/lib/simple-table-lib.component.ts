@@ -1,6 +1,8 @@
 import {OnChanges} from '@angular/core';
 import {Component, Input} from '@angular/core';
 
+export type DataSource<T> = T
+
 @Component({
   selector: 'demo-simple-table',
   template: `
@@ -15,7 +17,7 @@ import {Component, Input} from '@angular/core';
       </thead>
       <tbody>
       <tr
-        *ngFor="let item of dataSource; index as index"
+        *ngFor="let item of source; index as index"
         [ngClass]="rowClass"
       >
         <td *ngFor="let prop of columnProps"
@@ -23,7 +25,7 @@ import {Component, Input} from '@angular/core';
           {{
           showRowNumber && prop.dataField === '#'
             ? index + 1
-            : item[prop.dataField]
+            : isObjectType ? item[prop.dataField] : isValueType ? item : ''
           }}
         </td>
       </tr>
@@ -31,12 +33,32 @@ import {Component, Input} from '@angular/core';
     </table>
   `
 })
-export class SimpleTableLibComponent implements OnChanges{
+export class SimpleTableLibComponent implements OnChanges {
+  source: DataSource<Array<any>> = []
+
+  isValueType: boolean
+
+  isObjectType: boolean
+
   /**
    * Data source reference
    */
   @Input()
-  dataSource: Array<any> = [];
+  set dataSource(s: DataSource<Array<any>>) {
+    if (!s) return;
+
+    const isIterable = Array.isArray(s)
+
+    if (!isIterable) {
+      throw Error('datasource should be an array but found ' + typeof s + ' instead')
+    }
+
+    this.isObjectType = s.some(o => !Array.isArray(o) && typeof o === 'object' && typeof o !== 'function');
+    this.isValueType = s.some(o => typeof o !== 'object' && typeof o !== 'function');
+
+    this.source = s
+
+  }
 
   /**
    * Apply css class to the table.

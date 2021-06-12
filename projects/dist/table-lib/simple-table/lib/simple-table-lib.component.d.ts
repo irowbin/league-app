@@ -1,10 +1,14 @@
 import { OnChanges } from '@angular/core';
 import * as i0 from "@angular/core";
+export declare type DataSource<T> = T;
 export declare class SimpleTableLibComponent implements OnChanges {
+    source: DataSource<Array<any>>;
+    isValueType: boolean;
+    isObjectType: boolean;
     /**
      * Data source reference
      */
-    dataSource: Array<any>;
+    set dataSource(s: DataSource<Array<any>>);
     /**
      * Apply css class to the table.
      */

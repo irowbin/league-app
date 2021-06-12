@@ -5,10 +5,7 @@ import { CommonModule } from '@angular/common';
 
 class SimpleTableLibComponent {
     constructor() {
-        /**
-         * Data source reference
-         */
-        this.dataSource = [];
+        this.source = [];
         /**
          * Apply css class to the table.
          */
@@ -25,6 +22,20 @@ class SimpleTableLibComponent {
          * Apply css class to the table body row.
          */
         this.rowClass = '';
+    }
+    /**
+     * Data source reference
+     */
+    set dataSource(s) {
+        if (!s)
+            return;
+        const isIterable = Array.isArray(s);
+        if (!isIterable) {
+            throw Error('datasource should be an array but found ' + typeof s + ' instead');
+        }
+        this.isObjectType = s.some(o => !Array.isArray(o) && typeof o === 'object' && typeof o !== 'function');
+        this.isValueType = s.some(o => typeof o !== 'object' && typeof o !== 'function');
+        this.source = s;
     }
     ngOnChanges() {
         if (!this.columnConfig)
@@ -49,7 +60,7 @@ SimpleTableLibComponent.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "12.0.0"
       </thead>
       <tbody>
       <tr
-        *ngFor="let item of dataSource; index as index"
+        *ngFor="let item of source; index as index"
         [ngClass]="rowClass"
       >
         <td *ngFor="let prop of columnProps"
@@ -57,7 +68,7 @@ SimpleTableLibComponent.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "12.0.0"
           {{
           showRowNumber && prop.dataField === '#'
             ? index + 1
-            : item[prop.dataField]
+            : isObjectType ? item[prop.dataField] : isValueType ? item : ''
           }}
         </td>
       </tr>
@@ -80,7 +91,7 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "12.0.3", ngImpor
       </thead>
       <tbody>
       <tr
-        *ngFor="let item of dataSource; index as index"
+        *ngFor="let item of source; index as index"
         [ngClass]="rowClass"
       >
         <td *ngFor="let prop of columnProps"
@@ -88,7 +99,7 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "12.0.3", ngImpor
           {{
           showRowNumber && prop.dataField === '#'
             ? index + 1
-            : item[prop.dataField]
+            : isObjectType ? item[prop.dataField] : isValueType ? item : ''
           }}
         </td>
       </tr>
