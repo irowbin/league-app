@@ -1,7 +1,12 @@
-import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnChanges} from '@angular/core';
-import {LeagueChartModel} from '@app/modules/common/models';
-import {LeagueDataHandlerService} from '../../handlers/league-data-handler.service';
-import {ResultSystemBase} from '@modules/result-system/result-system.base';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  OnChanges
+} from '@angular/core';
+import { LeagueChartModel } from '@app/modules/common/models';
+import { LeagueDataHandlerService } from '../../handlers/league-data-handler.service';
+import { ResultSystemBase } from '@modules/result-system/result-system.base';
 
 @Component({
   selector: 'app-league-table',
@@ -23,22 +28,23 @@ export class LeagueTableComponent extends ResultSystemBase
     { dataField: 'goalsScored', caption: 'Pts' }
   ];
 
-  constructor(public dataHandlerService: LeagueDataHandlerService, private cdr: ChangeDetectorRef) {
+  constructor(
+    public dataHandlerService: LeagueDataHandlerService,
+    private cdr: ChangeDetectorRef
+  ) {
     super(dataHandlerService);
   }
 
   private initTableData(): void {
-    this.dataHandlerService
-      .computeRankingResult(this.leagueData)
-      .then((r) => {
-        this.cdr.markForCheck()
-        this.tableData = r.result
-      });
+    this.dataHandlerService.computeRankingResult(this.leagueData).then((r) => {
+      this.cdr.markForCheck();
+      this.tableData = r.result;
+    });
   }
 
   // inherit as it shares data to the view using input prop and mutation
   ngOnChanges(): void {
-    if(!this.leagueData) return;
+    if (!this.leagueData) return;
     this.initTableData();
   }
 }

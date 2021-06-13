@@ -7,12 +7,14 @@ import { DebugElement } from '@angular/core';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { findComponent } from '@src/test-util';
+import { LeagueChartModel, TeamMatchesModel } from '@modules/common/models';
+import { PromiseWorkerEvent } from '@modules/common';
 
 describe('LeagueTableComponent', () => {
   let component: LeagueTableComponent;
   let fixture: ComponentFixture<LeagueTableComponent>;
   let de: DebugElement;
-  let handlerService: LeagueDataHandlerService
+  let handlerService: LeagueDataHandlerService;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -26,8 +28,7 @@ describe('LeagueTableComponent', () => {
     fixture = TestBed.createComponent(LeagueTableComponent);
     component = fixture.componentInstance;
     de = fixture.debugElement;
-    handlerService = TestBed.inject(LeagueDataHandlerService)
-    fixture.detectChanges();
+    handlerService = TestBed.inject(LeagueDataHandlerService);
   });
 
   it('should create LeagueTableComponent', () => {
@@ -44,24 +45,43 @@ describe('LeagueTableComponent', () => {
     expect(table.nativeElement).toBeDefined();
   });
 
-  // it('should have input prop values', (done) => {
-  //  TODO: test async later
-  // });
+  it('should have input prop values', () => {
+    fixture.changeDetectorRef.markForCheck();
+    const table = findComponent(fixture, 'demo-simple-table');
+    component.tableData = [{ teamName: 'x' }];
+    fixture.detectChanges();
+    expect(table).toBeTruthy();
+    expect(table.properties.dataSource).toEqual([{ teamName: 'x' }]);
+    expect(table.properties.columnConfig).toBeDefined();
+  });
 
-  // it('should define property tableData after leagueData defined', () => {
-  // TODO test async later
-  //   component.leagueData = [
-  //     {
-  //       awayTeam: 'x',
-  //       awayTeamScore: 1,
-  //       homeTeam: 'y',
-  //       homeScore: 0,
-  //       uuid: 'xyz',
-  //       date: '09/12/12'
-  //     }
-  //   ];
-  //   component.ngOnChanges();
-  //   fixture.detectChanges();
-  //   expect(component.tableData.length).toBe(2);
-  // });
+  it('should define property tableData after leagueData defined', (done) => {
+    component.leagueData = [
+      {
+        awayTeam: 'x',
+        awayTeamScore: 1,
+        homeTeam: 'y',
+        homeScore: 0,
+        uuid: 'xyz',
+        date: '09/12/12'
+      }
+    ];
+    const mockData: Array<Partial<LeagueChartModel>> = [
+      { teamName: 'x' },
+      { teamName: 'y' }
+    ];
+    const mockResult: PromiseWorkerEvent<Array<LeagueChartModel>> = {
+      result: mockData as any
+    };
+    const spiedFn = spyOn(
+      handlerService,
+      'computeRankingResult'
+    ).and.returnValue(Promise.resolve(mockResult));
+    component.ngOnChanges();
+    spiedFn.calls.mostRecent().returnValue.then((r) => {
+      fixture.detectChanges();
+      expect(component.tableData.length).toBe(2);
+      done();
+    });
+  });
 });
