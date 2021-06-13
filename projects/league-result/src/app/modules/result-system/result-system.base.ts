@@ -1,11 +1,11 @@
-import { OnDestroy } from '@angular/core';
-import { Component, Input } from '@angular/core';
-import { Subject } from 'rxjs';
-import { LeagueDataHandlerService } from '@modules/result-system/handlers/league-data-handler.service';
-import { LeagueChartModel, TeamMatchesModel } from '@modules/common/models';
-import { DataSource } from 'simple-table-lib';
+import {OnDestroy} from '@angular/core';
+import {Component, Input} from '@angular/core';
+import {Subject} from 'rxjs';
+import {LeagueDataHandlerService} from '@modules/result-system/handlers/league-data-handler.service';
+import {LeagueChartModel, TeamMatchesModel} from '@modules/common/models';
+import {DataSource} from 'simple-table-lib';
 
-@Component({ template: '' })
+@Component({template: ''})
 export class ResultSystemBase implements OnDestroy {
   /**
    * Token to dispose a collection  of rxjs observers on component disposal.
@@ -30,17 +30,28 @@ export class ResultSystemBase implements OnDestroy {
 
   // TODO: more abstract members
 
-  constructor(public dataHandlerService: LeagueDataHandlerService) {}
+  constructor(public dataHandlerService: LeagueDataHandlerService) {
+  }
+
+  private initTableData(): void {
+    this.dataHandlerService.computeRankingResult(
+      this.leagueData
+    ).then(r => this.tableData = r.result);
+
+  }
+
+  private initViewData(): void {
+    this.dataHandlerService.computeViewResults(
+      this.leagueData
+    ).then(r => this.resultPreview = r.result);
+  }
 
   // share across components
   ngOnChanges(): void {
+
     if (!this.leagueData) return;
-    this.tableData = this.dataHandlerService.computeRankingResult(
-      this.leagueData
-    );
-    this.resultPreview = this.dataHandlerService.computeViewResults(
-      this.leagueData
-    );
+    this.initTableData();
+    this.initViewData();
   }
 
   // share across components

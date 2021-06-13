@@ -3,108 +3,126 @@ import {
   LeagueChartModel,
   TeamMatchesModel
 } from '@app/modules/common/models';
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
+import {PromiseWorkerJob, PromiseWorker, PromiseWorkerEvent} from "@modules/common/utils/inline-worker";
 
 @Injectable()
 export class LeagueDataHandlerService {
   computeRankingResult(
     matchPayload: Array<TeamMatchesModel>
-  ): Array<Partial<LeagueChartModel>> {
-    // initial result value
-    const initialValue = {
-      teamName: '',
-      played: 0,
-      won: 0,
-      lost: 0,
-      drawn: 0,
-      goalsScored: 0,
-      goalsAgainst: 0
-    };
+  ): Promise<PromiseWorkerEvent<Array<LeagueChartModel>>> {
+    const promiseWorker = new PromiseWorker();
 
-    // calculate match results
-    const matchResult = (
-      leagueChart: ChartValueType,
-      match: TeamMatchesModel
-    ) => {
-      const { homeTeam, awayTeam, homeScore, awayTeamScore } = match;
+    const chartJob: PromiseWorkerJob<Array<TeamMatchesModel>, Array<LeagueChartModel>> = new PromiseWorkerJob((args) => {
+      // initial result value
+      const initialValue = {
+        teamName: '',
+        played: 0,
+        won: 0,
+        lost: 0,
+        drawn: 0,
+        goalsScored: 0,
+        goalsAgainst: 0
+      };
 
-      const homeTeamObj = leagueChart[homeTeam];
-      const awayTeamObj = leagueChart[awayTeam];
+      // calculate match results
+      const matchResult = (
+        leagueChart: ChartValueType,
+        match: TeamMatchesModel
+      ) => {
+        const {homeTeam, awayTeam, homeScore, awayTeamScore} = match;
 
-      if (homeScore > awayTeamScore) {
-        // home team won this
-        homeTeamObj.won++;
-        // away team lost it
-        awayTeamObj.lost++;
-      } else if (homeScore < awayTeamScore) {
-        // home team lost it
-        homeTeamObj.lost++;
-        // away team won it
-        awayTeamObj.won++;
-      } else {
-        // otherwise its draw game
-        homeTeamObj.drawn++;
-        awayTeamObj.drawn++;
-      }
-    };
+        const homeTeamObj = leagueChart[homeTeam];
+        const awayTeamObj = leagueChart[awayTeam];
 
-    // calculate goals
-    const goals = (
-      leagueChart: ChartValueType,
-      teamName: string,
-      scored: number,
-      against: number
-    ): void => {
-      leagueChart[teamName].goalsScored += scored;
-      leagueChart[teamName].goalsAgainst += against;
-    };
+        if (homeScore > awayTeamScore) {
+          // home team won this
+          homeTeamObj.won++;
+          // away team lost it
+          awayTeamObj.lost++;
+        } else if (homeScore < awayTeamScore) {
+          // home team lost it
+          homeTeamObj.lost++;
+          // away team won it
+          awayTeamObj.won++;
+        } else {
+          // otherwise its draw game
+          homeTeamObj.drawn++;
+          awayTeamObj.drawn++;
+        }
+      };
 
-    const calculated = matchPayload.reduce((leagueChart, match) => {
-      const { homeTeam, awayTeam } = match;
+      // calculate goals
+      const goals = (
+        leagueChart: ChartValueType,
+        teamName: string,
+        scored: number,
+        against: number
+      ): void => {
+        leagueChart[teamName].goalsScored += scored;
+        leagueChart[teamName].goalsAgainst += against;
+      };
 
-      // init team with default initialValue for teams.
-      if (!leagueChart[homeTeam]) {
-        leagueChart[homeTeam] = { ...initialValue };
-      }
-      if (!leagueChart[awayTeam]) {
-        leagueChart[awayTeam] = { ...initialValue };
-      }
+      const calculated = args.reduce((leagueChart, match) => {
+        const {homeTeam, awayTeam} = match;
 
-      // increase the played counter of home & away teams.
-      [homeTeam, awayTeam].forEach(
-        (teamName) => leagueChart[teamName].played++
-      );
+        // init team with default initialValue for teams.
+        if (!leagueChart[homeTeam]) {
+          leagueChart[homeTeam] = {...initialValue};
+        }
+        if (!leagueChart[awayTeam]) {
+          leagueChart[awayTeam] = {...initialValue};
+        }
 
-      // calculate teams won,los & drawn scores.
-      matchResult(leagueChart, match);
+        // increase the played counter of home & away teams.
+        [homeTeam, awayTeam].forEach(
+          (teamName) => leagueChart[teamName].played++
+        );
 
-      // calculate scored and against goals  of home / away teams.
-      goals(leagueChart, homeTeam, match.homeScore, match.awayTeamScore);
-      goals(leagueChart, awayTeam, match.awayTeamScore, match.homeScore);
+        // calculate teams won,los & drawn scores.
+        matchResult(leagueChart, match);
 
-      return leagueChart;
-    }, {} as ChartValueType);
+        // calculate scored and against goals  of home / away teams.
+        goals(leagueChart, homeTeam, match.homeScore, match.awayTeamScore);
+        goals(leagueChart, awayTeam, match.awayTeamScore, match.homeScore);
 
-    // Sort by highest played score
-    return Object.keys(calculated)
-      .map((teamName) => ({ ...calculated[teamName], teamName }))
-      .sort((a, b) => b.goalsScored - a.goalsScored);
+        return leagueChart;
+      }, {} as ChartValueType);
+
+      // Sort by highest played score
+      const result: Array<LeagueChartModel> = Object.keys(calculated)
+        .map((teamName) => ({...calculated[teamName], teamName} as LeagueChartModel))
+        .sort((a, b) => b.goalsScored - a.goalsScored);
+      return Promise.resolve(result);
+    }, matchPayload);
+
+    // run an async task inside worker thread.
+    return promiseWorker.runTaskOf<Array<LeagueChartModel>>(chartJob)
   }
 
   computeViewResults(
     matchPayload: Array<TeamMatchesModel>
-  ): Array<{ key: string; value: Array<TeamMatchesModel> }> {
-    // unique dates
-    const dates = [...new Set(matchPayload.map((m) => m.date))];
-    return dates
-      .sort((a, b) => (b > a ? 1 : -1))
-      .reduce((results, date) => {
-        const matches = matchPayload.filter((m) => m.date === date);
-        results.push({
-          key: date,
-          value: matches
-        });
-        return results;
-      }, []);
+  ): Promise<PromiseWorkerEvent<Array<{ key: string; value: Array<TeamMatchesModel> }>>> {
+    const promiseWorker = new PromiseWorker();
+
+    const viewJob: PromiseWorkerJob<Array<TeamMatchesModel>, Array<{ key: string; value: Array<TeamMatchesModel> }>> = new PromiseWorkerJob((args) => {
+
+      // unique dates
+      const dates = [...new Set(args.map((m) => m.date))];
+      const result = dates
+        .sort((a, b) => (b > a ? 1 : -1))
+        .reduce((results, date) => {
+          const matches = args.filter((m) => m.date === date);
+          results.push({
+            key: date,
+            value: matches
+          });
+          return results;
+        }, []);
+      return Promise.resolve(result)
+    }, matchPayload)
+
+    // runs a background job and returns result as generic type.
+    return promiseWorker.runTaskOf<Array<{ key: string; value: Array<TeamMatchesModel> }>>(viewJob)
   }
 }
