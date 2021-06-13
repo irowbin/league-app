@@ -28,28 +28,9 @@ export class ResultSystemBase implements OnDestroy {
   @Input()
   leagueData: Array<TeamMatchesModel>;
 
-  // TODO: more abstract members
-
   constructor(public dataHandlerService: LeagueDataHandlerService) {}
 
-  private initTableData(): void {
-    this.dataHandlerService
-      .computeRankingResult(this.leagueData)
-      .then((r) => (this.tableData = r.result));
-  }
-
-  private initViewData(): void {
-    this.dataHandlerService
-      .computeViewResults(this.leagueData)
-      .then((r) => (this.resultPreview = r.result));
-  }
-
-  // share across components
-  ngOnChanges(): void {
-    if (!this.leagueData) return;
-    this.initTableData();
-    this.initViewData();
-  }
+  // TODO: more abstract members
 
   // share across components
   ngOnDestroy(): void {
