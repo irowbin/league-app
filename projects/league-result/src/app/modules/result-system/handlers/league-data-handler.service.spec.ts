@@ -30,26 +30,26 @@ describe('LeagueDataHandlerService', () => {
     ];
   });
 
-  it('#computeRankingResult should return valid ranking result', () => {
-    const result = service.computeRankingResult(mockData);
-    expect(result).toBeDefined();
-    expect(result.length).toBe(4);
+  it('#computeRankingResult should return valid ranking result', async () => {
+    const res = await service.computeRankingResult(mockData);
+    expect(res).toBeDefined();
+    expect(res.result.length).toBe(4);
   });
 
-  it('#computeViewResults should return valid view result with date desc', () => {
-    const result = service.computeViewResults(mockData);
-    expect(result).toBeDefined();
-    expect(result.length).toBe(2);
+  it('#computeViewResults should return valid view result with date desc', async () => {
+    const res = await service.computeViewResults(mockData);
+    expect(res).toBeDefined();
+    expect(res.result.length).toBe(2);
     const sorted = mockData.map((m) => m.date).sort((a, b) => (b > a ? 1 : -1));
-    expect(result.map((r) => r.key)).toEqual(sorted);
+    expect(res.result.map((r) => r.key)).toEqual(sorted);
   });
 
   describe('winner teams', () => {
     [teamX, teamY].forEach((teamName) => {
-      it(`should calculate winner '${teamName}'s WON, LOST, PLAYED, DRAWN, POINTS result`, () => {
-        const result = service.computeRankingResult(mockData);
-        expect(result).toBeDefined();
-        const team = result.find((x) => x.teamName === teamName);
+      it(`should calculate winner '${teamName}'s WON, LOST, PLAYED, DRAWN, POINTS result`, async () => {
+        const res = await service.computeRankingResult(mockData);
+        expect(res.result).toBeDefined();
+        const team = res.result.find((x) => x.teamName === teamName);
         expect(team).toBeDefined();
         expect(team.lost).toBe(0);
         expect(team.played).toBe(1);
@@ -62,10 +62,10 @@ describe('LeagueDataHandlerService', () => {
 
   describe('loser teams', () => {
     [teamW, teamZ].forEach((teamName) => {
-      it(`should calculate loser '${teamName}'s WON, LOST, PLAYED, DRAWN, POINTS result`, () => {
-        const result = service.computeRankingResult(mockData);
-        expect(result).toBeDefined();
-        const team = result.find((x) => x.teamName === teamName);
+      it(`should calculate loser '${teamName}'s WON, LOST, PLAYED, DRAWN, POINTS result`, async () => {
+        const res = await service.computeRankingResult(mockData);
+        expect(res.result).toBeDefined();
+        const team = res.result.find((x) => x.teamName === teamName);
         expect(team).toBeDefined();
         expect(team.lost).toBe(1);
         expect(team.played).toBe(1);

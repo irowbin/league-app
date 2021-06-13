@@ -2,55 +2,52 @@
  * Creates a promise worker instance.
  */
 export class PromiseWorker {
-
   /**
    * Current instance of worker
    */
   private readonly worker: Worker;
 
   constructor() {
-    if (typeof (Worker) === 'undefined') {
-      console.warn('The worker is undefined or unsupported browser')
+    if (typeof Worker === 'undefined') {
+      console.warn('The worker is undefined or unsupported browser');
       return;
     }
     // basically the job function that runs inside the worker.
-    const scriptUrl = PromiseWorker.normalizedPromiseWorkerScript()
+    const scriptUrl = PromiseWorker.normalizedPromiseWorkerScript();
 
-    const tempUrl = URL.createObjectURL(new Blob([scriptUrl],
-      {
+    const tempUrl = URL.createObjectURL(
+      new Blob([scriptUrl], {
         type: 'application/javascript'
-      }
-    ));
+      })
+    );
     this.worker = new Worker(tempUrl);
-    URL.revokeObjectURL(tempUrl)
+    URL.revokeObjectURL(tempUrl);
   }
 
   /**
    * Run a task into worker thread.
    * @param job
    */
-   runTaskOf = <T>(job: PromiseWorkerJob<unknown, unknown>): Promise<PromiseWorkerEvent<T>> => {
-    return new Promise<PromiseWorkerEvent<T>>(
-      (resolve, reject) => {
-        this.worker.onmessage = (ev: MessageEvent) => resolve(ev.data);
+  runTaskOf = <T>(
+    job: PromiseWorkerJob<unknown, unknown>
+  ): Promise<PromiseWorkerEvent<T>> => {
+    return new Promise<PromiseWorkerEvent<T>>((resolve, reject) => {
+      this.worker.onmessage = (ev: MessageEvent) => resolve(ev.data);
 
-        this.worker.onerror = (err) => reject(err);
+      this.worker.onerror = (err) => reject(err);
 
-        this.worker.postMessage({
-          args: {
-            fnArgs: job.args,
-            taskFunction: job.taskFunction.toString()
-          }
-        });
-      }
-    );
+      this.worker.postMessage({
+        args: {
+          fnArgs: job.args,
+          taskFunction: job.taskFunction.toString()
+        }
+      });
+    });
+  };
+
+  terminateTask(): void {
+    if (this.worker) this.worker.terminate();
   }
-
-   terminateTask(): void {
-    if (this.worker)
-      this.worker.terminate()
-  }
-
 
   /**
    *  Creates normalized script text including our task fn which will be executed inside worker context.
@@ -89,7 +86,6 @@ export class PromiseWorker {
  * @see PromiseWorkerEvent
  */
 export class PromiseWorkerJob<T, K> {
-
   /**
    * The token is accessed from the worker with incoming payload of a task argument.
    */
@@ -112,8 +108,8 @@ export class PromiseWorkerJob<T, K> {
    * @param args input data for the task that can be accessed and used inside worker.
    */
   taskFunction = (args: T): Promise<K> => {
-    return Promise.reject('not yet implemented')
-  }
+    return Promise.reject('not yet implemented');
+  };
 }
 
 /**

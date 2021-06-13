@@ -1,5 +1,5 @@
-import {AfterViewInit, OnChanges} from '@angular/core';
-import {Component, EventEmitter, Input, Output} from '@angular/core';
+import { AfterViewInit, OnChanges } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import {
   AbstractControl,
   FormBuilder,
@@ -7,13 +7,13 @@ import {
   ValidationErrors,
   ValidatorFn
 } from '@angular/forms';
-import {Validators} from '@angular/forms';
-import {ResultSystemService} from '@app/modules/common';
-import {TeamMatchesModel} from '@app/modules/common/models';
-import {ResultSystemBase} from '@modules/result-system/result-system.base';
-import {debounceTime, takeUntil} from 'rxjs/operators';
-import {UuidGenerator} from '@modules/common/utils/uuid-generator';
-import {LeagueDataHandlerService} from '@modules/result-system/handlers/league-data-handler.service';
+import { Validators } from '@angular/forms';
+import { ResultSystemService } from '@app/modules/common';
+import { TeamMatchesModel } from '@app/modules/common/models';
+import { ResultSystemBase } from '@modules/result-system/result-system.base';
+import { debounceTime, takeUntil } from 'rxjs/operators';
+import { UuidGenerator } from '@modules/common/utils/uuid-generator';
+import { LeagueDataHandlerService } from '@modules/result-system/handlers/league-data-handler.service';
 
 @Component({
   selector: 'app-result-form',
@@ -58,18 +58,20 @@ export class ResultFormComponent extends ResultSystemBase
   ): string {
     let formatted = '';
     switch (format) {
-      case 'US': {
-        // html5 date picker gives us default format as yyyy-mm-dd value.
-        const d = date.split('-').reverse();
-        // format date US standard
-        formatted = `${d[1]}/${d[0]}/${d[2]}`;
-      }
+      case 'US':
+        {
+          // html5 date picker gives us default format as yyyy-mm-dd value.
+          const d = date.split('-').reverse();
+          // format date US standard
+          formatted = `${d[1]}/${d[0]}/${d[2]}`;
+        }
         break;
-      case 'HTML5': {
-        const d = date.split('/');
-        // make date value readable by html5 input.
-        formatted = `${d[2]}-${d[0]}-${d[1]}`;
-      }
+      case 'HTML5':
+        {
+          const d = date.split('/');
+          // make date value readable by html5 input.
+          formatted = `${d[2]}-${d[0]}-${d[1]}`;
+        }
         break;
     }
     return formatted;
@@ -132,7 +134,7 @@ export class ResultFormComponent extends ResultSystemBase
       // they both need to define so we can run compare.
       if (!(value || compareToValue)) return null;
 
-      return value === compareToValue ? {match: true} : null;
+      return value === compareToValue ? { match: true } : null;
     };
   }
 
@@ -140,15 +142,9 @@ export class ResultFormComponent extends ResultSystemBase
     this.resultForm = this.fb.group({
       uuid: new UuidGenerator()._uuid,
       date: ['', [Validators.required]],
-      homeTeam: [
-        '',
-        [Validators.required, this.compareValue('awayTeam')]
-      ],
+      homeTeam: ['', [Validators.required, this.compareValue('awayTeam')]],
       homeScore: [0, [Validators.min(0), Validators.required]],
-      awayTeam: [
-        '',
-        [Validators.required, this.compareValue('homeTeam')]
-      ],
+      awayTeam: ['', [Validators.required, this.compareValue('homeTeam')]],
       awayTeamScore: [0, [Validators.min(0), Validators.required]]
     });
   }

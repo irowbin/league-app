@@ -3,8 +3,12 @@ import {
   LeagueChartModel,
   TeamMatchesModel
 } from '@app/modules/common/models';
-import {Injectable} from '@angular/core';
-import {PromiseWorkerJob, PromiseWorker, PromiseWorkerEvent} from "@modules/common/utils/inline-worker";
+import { Injectable } from '@angular/core';
+import {
+  PromiseWorkerJob,
+  PromiseWorker,
+  PromiseWorkerEvent
+} from '@modules/common/utils/inline-worker';
 
 @Injectable()
 export class LeagueDataHandlerService {
@@ -13,7 +17,10 @@ export class LeagueDataHandlerService {
   ): Promise<PromiseWorkerEvent<Array<LeagueChartModel>>> {
     const promiseWorker = new PromiseWorker();
 
-    const chartJob: PromiseWorkerJob<Array<TeamMatchesModel>, Array<LeagueChartModel>> = new PromiseWorkerJob((args) => {
+    const chartJob: PromiseWorkerJob<
+      Array<TeamMatchesModel>,
+      Array<LeagueChartModel>
+    > = new PromiseWorkerJob((args) => {
       // initial result value
       const initialValue = {
         teamName: '',
@@ -30,7 +37,7 @@ export class LeagueDataHandlerService {
         leagueChart: ChartValueType,
         match: TeamMatchesModel
       ) => {
-        const {homeTeam, awayTeam, homeScore, awayTeamScore} = match;
+        const { homeTeam, awayTeam, homeScore, awayTeamScore } = match;
 
         const homeTeamObj = leagueChart[homeTeam];
         const awayTeamObj = leagueChart[awayTeam];
@@ -64,14 +71,14 @@ export class LeagueDataHandlerService {
       };
 
       const calculated = args.reduce((leagueChart, match) => {
-        const {homeTeam, awayTeam} = match;
+        const { homeTeam, awayTeam } = match;
 
         // init team with default initialValue for teams.
         if (!leagueChart[homeTeam]) {
-          leagueChart[homeTeam] = {...initialValue};
+          leagueChart[homeTeam] = { ...initialValue };
         }
         if (!leagueChart[awayTeam]) {
-          leagueChart[awayTeam] = {...initialValue};
+          leagueChart[awayTeam] = { ...initialValue };
         }
 
         // increase the played counter of home & away teams.
@@ -91,22 +98,29 @@ export class LeagueDataHandlerService {
 
       // Sort by highest played score
       const result: Array<LeagueChartModel> = Object.keys(calculated)
-        .map((teamName) => ({...calculated[teamName], teamName} as LeagueChartModel))
+        .map(
+          (teamName) =>
+            ({ ...calculated[teamName], teamName } as LeagueChartModel)
+        )
         .sort((a, b) => b.goalsScored - a.goalsScored);
       return Promise.resolve(result);
     }, matchPayload);
 
     // run an async task inside worker thread.
-    return promiseWorker.runTaskOf<Array<LeagueChartModel>>(chartJob)
+    return promiseWorker.runTaskOf<Array<LeagueChartModel>>(chartJob);
   }
 
   computeViewResults(
     matchPayload: Array<TeamMatchesModel>
-  ): Promise<PromiseWorkerEvent<Array<{ key: string; value: Array<TeamMatchesModel> }>>> {
+  ): Promise<
+    PromiseWorkerEvent<Array<{ key: string; value: Array<TeamMatchesModel> }>>
+  > {
     const promiseWorker = new PromiseWorker();
 
-    const viewJob: PromiseWorkerJob<Array<TeamMatchesModel>, Array<{ key: string; value: Array<TeamMatchesModel> }>> = new PromiseWorkerJob((args) => {
-
+    const viewJob: PromiseWorkerJob<
+      Array<TeamMatchesModel>,
+      Array<{ key: string; value: Array<TeamMatchesModel> }>
+    > = new PromiseWorkerJob((args) => {
       // unique dates
       const dates = [...new Set(args.map((m) => m.date))];
       const result = dates
@@ -119,10 +133,12 @@ export class LeagueDataHandlerService {
           });
           return results;
         }, []);
-      return Promise.resolve(result)
-    }, matchPayload)
+      return Promise.resolve(result);
+    }, matchPayload);
 
     // runs a background job and returns result as generic type.
-    return promiseWorker.runTaskOf<Array<{ key: string; value: Array<TeamMatchesModel> }>>(viewJob)
+    return promiseWorker.runTaskOf<
+      Array<{ key: string; value: Array<TeamMatchesModel> }>
+    >(viewJob);
   }
 }
