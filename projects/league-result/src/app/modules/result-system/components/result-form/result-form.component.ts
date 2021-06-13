@@ -143,9 +143,9 @@ export class ResultFormComponent extends ResultSystemBase
       uuid: new UuidGenerator()._uuid,
       date: ['', [Validators.required]],
       homeTeam: ['', [Validators.required, this.compareValue('awayTeam')]],
-      homeScore: [0, [Validators.min(0), Validators.required]],
+      homeScore: [0, [Validators.pattern(/^[0-9]$/), Validators.required]],
       awayTeam: ['', [Validators.required, this.compareValue('homeTeam')]],
-      awayTeamScore: [0, [Validators.min(0), Validators.required]]
+      awayTeamScore: [0, [Validators.pattern(/^[0-9]$/), Validators.required]]
     });
   }
 
@@ -172,6 +172,8 @@ export class ResultFormComponent extends ResultSystemBase
     const payload = this.resultForm.value as TeamMatchesModel;
     // format date US standard
     payload.date = ResultFormComponent.toggleDateFormat(payload.date, 'US');
+    payload.homeScore = Math.round(payload.homeScore)
+    payload.awayTeamScore = Math.round(payload.awayTeamScore)
 
     // once the update is done, notify to the parent.
     this.resultService

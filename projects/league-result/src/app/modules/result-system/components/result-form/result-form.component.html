@@ -47,7 +47,9 @@
                      formControlName="homeScore">
               <span *ngIf="errors['homeScore']"
                     class="mb-3 text-danger">
-                {{ errors['homeScore']['required'] ? 'required' : 'only positive non decimal integer allowed' }}
+                {{ errors['homeScore']['required'] ? 'required' :
+                   errors['homeScore']['pattern'] ?
+                   'only positive non decimal integer allowed' : ''}}
               </span>
             </div>
             <div class="form-group col-6">
@@ -58,7 +60,9 @@
                      formControlName="awayTeamScore">
               <span *ngIf="errors['awayTeamScore']"
                     class="mb-3 text-danger">
-                {{ errors['awayTeamScore']['required'] ? 'required' : 'only positive non decimal integer allowed' }}
+                {{ errors['awayTeamScore']['required'] ? 'required' :
+                   errors['awayTeamScore']['pattern'] ?
+                   'only positive non decimal integer allowed' : ''}}
               </span>
             </div>
           </div>
