@@ -18,7 +18,6 @@ export class AppComponent implements AfterViewInit {
     // we are going to sync league data to connected  clients.
     socket.on('connect', () => {
       console.log('connected');
-      // when an employee get deleted
       socket.on('LEAGUE_SYNCED', (leagueData: Array<TeamMatchesModel>) => {
         this.leagueService.syncStorageData = leagueData;
       });
